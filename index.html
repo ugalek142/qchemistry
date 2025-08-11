@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Curso Química Cuántica en Qiskit</title>
 
-  <!-- MathJax para fórmulas -->
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <!-- Carga MathJax -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
     /* Reset básico */
@@ -188,7 +188,7 @@
   </section>
 
   <main id="tab-content" class="content">
-    <!-- Contenido dinámico aquí -->
+    <!-- Contenido dinámico -->
   </main>
 
   <script>
@@ -369,7 +369,12 @@ ansatz = TwoLocal(rotation_blocks='ry', entanglement_blocks='cz', reps=3)
       function loadContent() {
         const content = courseData[currentModule][currentTab];
         contentDiv.innerHTML = content;
-        MathJax.typesetPromise();
+
+        // Recompila MathJax para renderizar fórmulas nuevas
+        if(window.MathJax){
+          MathJax.typesetPromise()
+            .catch((err) => console.error("MathJax error:", err));
+        }
       }
 
       moduleButtons.forEach(btn => {
