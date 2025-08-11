@@ -209,8 +209,8 @@ print("Energía del estado base:", result.total_energies[0])
   function loadContent(module, tab) {
     tabContent.innerHTML = courseData[module][tab];
     // Re-render MathJax fórmulas
-    if (window.MathJax) {
-      MathJax.typesetPromise();
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise();
     }
   }
 
