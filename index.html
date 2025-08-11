@@ -8,7 +8,163 @@
   <!-- MathJax para fórmulas -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f5f5;
+      color: #222;
+      line-height: 1.6;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto 20px;
+    }
+
+    #theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    #theme-toggle:hover {
+      transform: rotate(20deg);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .module-btn {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .module-btn:hover,
+    .module-btn.active {
+      background-color: #4285f4;
+      color: white;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+      gap: 12px;
+    }
+
+    .tab-btn {
+      background-color: #d0d0d0;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      background-color: #0b63e5;
+      color: white;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      min-height: 400px;
+      overflow-y: auto;
+      font-size: 1rem;
+    }
+
+    pre {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    p, ul, li {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* Tema oscuro */
+
+    body.dark {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+
+    body.dark nav .module-btn {
+      background-color: #333;
+      color: #ccc;
+    }
+
+    body.dark nav .module-btn.active,
+    body.dark nav .module-btn:hover {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    body.dark .tabs .tab-btn {
+      background-color: #333;
+      color: #ccc;
+    }
+
+    body.dark .tabs .tab-btn.active,
+    body.dark .tabs .tab-btn:hover {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    body.dark .content {
+      background-color: #1e1e1e;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+
+    body.dark pre {
+      background-color: #1e1e1e;
+      color: #f8f8f2;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -35,6 +191,225 @@
     <!-- Contenido dinámico aquí -->
   </main>
 
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const courseData = {
+        1: {
+          theory: `
+            <h2>Módulo 1: Introducción a la Química Cuántica</h2>
+            <p>La química cuántica estudia las propiedades y comportamiento de la materia a nivel atómico y molecular, utilizando la mecánica cuántica.</p>
+            <p>Conceptos clave:</p>
+            <ul>
+              <li>Función de onda \\( \\psi \\)</li>
+              <li>Ecuación de Schrödinger \\( \\hat{H} \\psi = E \\psi \\)</li>
+              <li>Principio de incertidumbre de Heisenberg</li>
+            </ul>
+            <p>La ecuación de Schrödinger es fundamental para determinar los estados energéticos permitidos en un sistema cuántico.</p>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Simulación sencilla de la función de onda en una caja unidimensional:</p>
+            <pre><code>import numpy as np
+import matplotlib.pyplot as plt
+
+L = 1  # Longitud de la caja
+x = np.linspace(0, L, 1000)
+psi = np.sqrt(2 / L) * np.sin(np.pi * x / L)
+
+plt.plot(x, psi)
+plt.title('Función de onda estado fundamental')
+plt.xlabel('Posición (x)')
+plt.ylabel('$\\psi(x)$')
+plt.show()
+</code></pre>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Explique el significado físico de la ecuación de Schrödinger y el principio de incertidumbre, con ejemplos.</p>
+          `
+        },
+        2: {
+          theory: `
+            <h2>Módulo 2: Mecánica Cuántica Aplicada a Átomos</h2>
+            <p>Se estudia el modelo atómico y cómo se describen los electrones con funciones de onda y números cuánticos.</p>
+            <ul>
+              <li>Números cuánticos: principal \\(n\\), azimutal \\(l\\), magnético \\(m\\), spin \\(s\\).</li>
+              <li>Orbitales atómicos y su forma matemática.</li>
+              <li>Principio de exclusión de Pauli.</li>
+            </ul>
+            <p>Ejemplo de función de onda del estado fundamental del hidrógeno:</p>
+            <p>\\[
+              \\psi_{100}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0}
+            \\]</p>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Código básico para obtener orbitales atómicos en Qiskit Nature:</p>
+            <pre><code>from qiskit_nature.drivers import PySCFDriver
+
+driver = PySCFDriver(atom='H .0 .0 .0', basis='sto3g')
+molecule = driver.run()
+print(molecule.orbital_energies)
+</code></pre>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Describa la importancia del principio de exclusión de Pauli en la estructura electrónica.</p>
+          `
+        },
+        3: {
+          theory: `
+            <h2>Módulo 3: Estructura Molecular y Enlace</h2>
+            <p>El enlace químico es explicado mediante orbitales moleculares resultantes de combinar orbitales atómicos.</p>
+            <ul>
+              <li>Orbitales atómicos: s, p, d, f.</li>
+              <li>Hibridación: sp, sp², sp³.</li>
+              <li>Combinación lineal de orbitales atómicos (LCAO).</li>
+            </ul>
+            <p>Ejemplo de orbital molecular en hidrógeno:</p>
+            <p>\\[
+              \\psi_{mol} = c_1 \\psi_{1s_A} + c_2 \\psi_{1s_B}
+            \\]</p>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Visualice orbitales con herramientas externas o con Qiskit Nature.</p>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Investigue y describa la geometría y propiedades de la hibridación sp, sp² y sp³.</p>
+          `
+        },
+        4: {
+          theory: `
+            <h2>Módulo 4: Métodos Cuánticos Computacionales</h2>
+            <p>Se emplean métodos numéricos para resolver sistemas cuánticos complejos.</p>
+            <ul>
+              <li>Métodos ab initio (Hartree-Fock, DFT).</li>
+              <li>Ventajas y limitaciones de cada método.</li>
+            </ul>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Ejecute cálculo Hartree-Fock para H₂ con Qiskit Nature:</p>
+            <pre><code>from qiskit_nature.drivers import PySCFDriver
+from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
+
+driver = PySCFDriver(atom='H .0 .0 .0; H .0 .0 0.74', basis='sto3g')
+problem = ElectronicStructureProblem(driver)
+print("Energía aproximada:", problem.second_q_ops()[0].to_matrix().diagonal().sum())
+</code></pre>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Compare brevemente los métodos Hartree-Fock y DFT en términos de precisión y costo computacional.</p>
+          `
+        },
+        5: {
+          theory: `
+            <h2>Módulo 5: Qiskit y Química Cuántica</h2>
+            <p>Introducción al uso de Qiskit para simulaciones cuánticas de química molecular.</p>
+            <ul>
+              <li>Estructura de Qiskit Nature.</li>
+              <li>Creación de moléculas y operadores.</li>
+              <li>Simulación de estados cuánticos moleculares.</li>
+            </ul>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Ejemplo básico de configuración en Qiskit:</p>
+            <pre><code>from qiskit_nature.drivers import PySCFDriver
+
+driver = PySCFDriver(atom='Li .0 .0 .0', basis='sto3g')
+molecule = driver.run()
+print(molecule)
+</code></pre>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Explique la función del driver PySCF en Qiskit Nature y qué tipo de cálculos permite realizar.</p>
+          `
+        },
+        6: {
+          theory: `
+            <h2>Módulo 6: Aplicaciones Avanzadas y Simulaciones</h2>
+            <p>Simulación de moléculas complejas, optimización de energía y algoritmos cuánticos aplicados.</p>
+            <ul>
+              <li>Algoritmo VQE (Variational Quantum Eigensolver).</li>
+              <li>Optimización variacional para encontrar estados de mínima energía.</li>
+            </ul>
+          `,
+          practice: `
+            <h3>Ejemplo Práctico</h3>
+            <p>Ejemplo esquemático para VQE:</p>
+            <pre><code>from qiskit.algorithms import VQE
+from qiskit.circuit.library import TwoLocal
+
+# Definición de circuito parametrizado (ansatz)
+ansatz = TwoLocal(rotation_blocks='ry', entanglement_blocks='cz', reps=3)
+
+# Aquí se integraría el Hamiltoniano y el backend
+# Implementación simplificada y conceptual
+</code></pre>
+          `,
+          homework: `
+            <h3>Tarea</h3>
+            <p>Investigue el algoritmo VQE y resuma sus ventajas y desafíos en química cuántica.</p>
+          `
+        }
+      };
+
+      let currentModule = 1;
+      let currentTab = "theory";
+
+      const moduleButtons = document.querySelectorAll(".module-btn");
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const contentDiv = document.getElementById("tab-content");
+
+      function loadContent() {
+        const content = courseData[currentModule][currentTab];
+        contentDiv.innerHTML = content;
+        MathJax.typesetPromise();
+      }
+
+      moduleButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (currentModule === +btn.dataset.module) return;
+
+          currentModule = +btn.dataset.module;
+          moduleButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          loadContent();
+        });
+      });
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (currentTab === btn.dataset.tab) return;
+
+          currentTab = btn.dataset.tab;
+          tabButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          loadContent();
+        });
+      });
+
+      // Toggle modo oscuro
+      const themeToggle = document.getElementById("theme-toggle");
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        if(document.body.classList.contains("dark")){
+          themeToggle.textContent = "☀️";
+        } else {
+          themeToggle.textContent = "🌙";
+        }
+      });
+
+      // Carga inicial
+      loadContent();
+    });
+  </script>
 </body>
 </html>
