@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Curso Completo de Química Cuántica — Psi4</title>
+  <title>Curso Completo de Química Cuántica — Psi4 Actualizado 2025</title>
 
-  <!-- MathJax (cargado sin async para asegurar disponibilidad al invocar typeset) -->
+  <!-- MathJax -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
@@ -22,7 +22,6 @@
     }
     h1 { font-size:1.35rem; }
 
-    /* --- Navegación módulos / pestañas --- */
     nav.modules { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:12px; }
     .module-btn {
       background:#e6eefc; border:1px solid #cfe0ff; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600;
@@ -32,7 +31,6 @@
     .tab-btn { background:#eef2f8; padding:7px 12px; border-radius:6px; border:1px solid #d7e6ff; cursor:pointer; font-weight:600; }
     .tab-btn.active { background:#0b63e5; color:#fff; border-color:#084fb0; }
 
-    /* --- Contenido --- */
     .content {
       max-width:1100px; margin:0 auto; background:#ffffff; padding:22px; border-radius:10px;
       box-shadow:0 8px 28px rgba(18,24,40,0.06); min-height:420px; overflow:auto;
@@ -43,16 +41,13 @@
     pre { background:#0d0d0d; color:#f8f8f2; padding:12px; border-radius:8px; overflow:auto; font-family: Consolas, monospace; font-size:0.92rem; position:relative; white-space:pre; }
     code { white-space: pre-wrap; }
 
-    /* copy button */
     .copy-btn {
       position:absolute; right:8px; top:8px; background:#2b6cff; color:white; border:none; padding:6px 8px; border-radius:6px; cursor:pointer; font-size:0.85rem;
     }
     .copy-btn.copied { background:#28a745; }
 
-    /* theme toggle */
     #theme-toggle { background:#0b63e5; color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; }
 
-    /* --- Dark theme --- */
     body.dark {
       background:#0f1720; color:#e6eef6;
     }
@@ -64,7 +59,6 @@
     body.dark pre { background:#071018; color:#dfeffb; }
     body.dark .copy-btn { background:#1565c0; }
 
-    /* responsive */
     @media (max-width:640px){
       .module-btn, .tab-btn { padding:8px 10px; font-size:0.9rem; }
       header { flex-direction:column; gap:12px; align-items:center; }
@@ -73,7 +67,7 @@
 </head>
 <body>
   <header>
-    <h1>Curso de Química Cuántica — Ejemplos y Código (Psi4)</h1>
+    <h1>Curso de Química Cuántica — Psi4 (Actualizado 2025)</h1>
     <div>
       <button id="theme-toggle" aria-label="Alternar tema">🌙 Modo oscuro</button>
     </div>
@@ -94,46 +88,42 @@
     <button class="tab-btn" data-tab="homework" role="tab">Tarea</button>
   </section>
 
-  <main id="content" class="content" role="main" aria-live="polite">
-    <!-- contenido dinámico -->
-  </main>
+  <main id="content" class="content" role="main" aria-live="polite"></main>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------------------------
-     Contenido con ejemplos en Psi4
-     --------------------------- */
+
   const courseData = {
     1: {
       theory: `
         <h2>Módulo 1 — Introducción</h2>
         <p>Conceptos clave: función de onda \\(\\psi\\), operador hamiltoniano \\(\\hat{H}\\) y la ecuación de Schrödinger.</p>
-        <p>Forma: \\(\\hat{H}\\,\\psi = E\\,\\psi\\). Interpretación: \\(|\\psi|^2\\) es la densidad de probabilidad.</p>
+        <p>Ecuación: \\(\\hat{H}\\psi = E\\psi\\), donde \\(\\psi\\) es la función de onda y \\(E\\) la energía.</p>
+        <p>Interpretación física: \\(|\\psi|^2\\) representa la densidad de probabilidad de encontrar la partícula.</p>
       `,
       practice: `
-        <h3>Ejemplo práctico 1 — Partícula en una caja (Python)</h3>
-        <p>Calcular y graficar el estado fundamental (requiere numpy y matplotlib).</p>
+        <h3>Ejemplo práctico 1 — Partícula en una caja</h3>
+        <p>Calcular y graficar el estado fundamental usando <code>numpy</code> y <code>matplotlib</code>.</p>
         <pre><button class="copy-btn">Copiar</button><code>import numpy as np
 import matplotlib.pyplot as plt
 
 L = 1.0
 x = np.linspace(0, L, 1000)
 n = 1
-psi = np.sqrt(2.0/L) * np.sin(n * np.pi * x / L)
+psi = np.sqrt(2 / L) * np.sin(n * np.pi * x / L)
 
 plt.plot(x, psi)
-plt.title('Función de onda — n=1')
+plt.title('Función de onda para partícula en una caja (n=1)')
 plt.xlabel('x')
 plt.ylabel('ψ(x)')
 plt.grid(True)
 plt.show()</code></pre>
-        <p>Ejecutar en Jupyter o en un script Python.</p>
       `,
       homework: `
-        <h3>Trabajo</h3>
+        <h3>Tarea</h3>
         <ol>
-          <li>Explique la interpretación física de \\(|\\psi|^2\\).</li>
-          <li>Implemente y compare los primeros 3 estados (n=1,2,3).</li>
+          <li>Explique el significado físico de \\(|\\psi|^2\\).</li>
+          <li>Implemente los primeros tres estados (n=1,2,3) y grafique cada uno.</li>
         </ol>
       `
     },
@@ -141,275 +131,236 @@ plt.show()</code></pre>
     2: {
       theory: `
         <h2>Módulo 2 — Mecánica cuántica aplicada a átomos</h2>
-        <p>Ejemplo: función 1s del hidrógeno:</p>
+        <p>Función de onda 1s del hidrógeno:</p>
         <p>\\[ \\psi_{1s}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0} \\]</p>
       `,
       practice: `
-        <h3>Ejemplo práctico 2 — Plot radial 1s (Python)</h3>
+        <h3>Ejemplo práctico 2 — Función radial 1s</h3>
         <pre><button class="copy-btn">Copiar</button><code>import numpy as np
 import matplotlib.pyplot as plt
 
-a0 = 1.0
+a0 = 1.0  # Radio de Bohr
 r = np.linspace(0, 10, 400)
-psi_1s = (1.0/np.sqrt(np.pi*a0**3)) * np.exp(-r/a0)
+psi_1s = (1/np.sqrt(np.pi * a0**3)) * np.exp(-r/a0)
 
 plt.plot(r, psi_1s)
-plt.title('Función radial 1s (H)')
-plt.xlabel('r (a.u.)')
-plt.ylabel('ψ_{1s}(r)')
+plt.title('Función de onda 1s del hidrógeno')
+plt.xlabel('r (bohr)')
+plt.ylabel('ψ₁ₛ(r)')
 plt.grid(True)
 plt.show()</code></pre>
       `,
       homework: `
-        <h3>Trabajo</h3>
-        <ul>
-          <li>Demuestre la normalización de \\(\\psi_{1s}(r)\\).</li>
-          <li>Compare con la densidad radial \\(4\\pi r^2 |\\psi|^2\\).</li>
-        </ul>
+        <h3>Tarea</h3>
+        <ol>
+          <li>Analice el comportamiento de \\(\\psi_{1s}(r)\\) cuando \\(r \\to 0\\) y cuando \\(r \\to \\infty\\).</li>
+          <li>Implemente y grafique la función 2s.</li>
+        </ol>
       `
     },
 
     3: {
       theory: `
-        <h2>Módulo 3 — Estructura molecular y orbitales</h2>
-        <p>Combinación lineal de orbitales atómicos (LCAO):</p>
-        <p>\\[ \\psi_{mol} = c_A \\psi_A + c_B \\psi_B \\]</p>
+        <h2>Módulo 3 — Instalación y configuración de Psi4</h2>
+        <p>Instalación recomendada con Conda para garantizar compatibilidad y entorno aislado:</p>
+        <pre><code>conda create -n psi4-env -c psi4 psi4=1.9 numpy matplotlib -y
+conda activate psi4-env</code></pre>
+        <p>Configuración básica dentro de un script Python:</p>
+        <pre><code>import psi4
+
+psi4.set_options({
+  'memory': '2 GB',
+  'nthreads': 4,
+  'reference': 'rhf'
+})</code></pre>
+        <p>Verifique la versión actual instalada con:</p>
+        <pre><code>import psi4
+print(psi4.__version__)</code></pre>
       `,
       practice: `
-        <h3>Ejemplo práctico 3 — Energía SCF y optimización con Psi4</h3>
-        <p>Instalación recomendada (Conda): <code>conda install psi4 -c psi4</code></p>
+        <h3>Ejemplo práctico 3 — Cálculo simple de energía de agua (H₂O)</h3>
         <pre><button class="copy-btn">Copiar</button><code>import psi4
 
-# Ajustes básicos
-psi4.set_memory('500 MB')
-psi4.core.set_output_file('psi4_output.dat', False)
+# Molécula de agua, geometría en angstroms
+h2o = psi4.geometry("""
+O
+H 1 0.96
+H 1 0.96 2 104.5
+""")
 
-# Definir molécula (agua)
-mol = psi4.geometry(\"\"\"
-O 0.000000 0.000000 0.000000
-H 0.000000 -0.757000 0.587000
-H 0.000000 0.757000 0.587000
-\"\"\")
+# Configuración
+psi4.set_options({
+    'memory': '2 GB',
+    'nthreads': 4,
+    'reference': 'rhf'
+})
 
-# Cálculo SCF (Hartree-Fock) con base STO-3G
-E_scf = psi4.energy('scf/sto-3g', molecule=mol)
-print('Energía SCF (Hartree-Fock) [Hartree]:', E_scf)
-
-# Optimización geométrica (opcional)
-E_opt = psi4.optimize('scf/sto-3g', molecule=mol)
-print('Energía optimizada:', E_opt)</code></pre>
-        <p>El archivo <code>psi4_output.dat</code> contiene el log detallado.</p>
+# Cálculo de energía con método HF y base 6-31G*
+energy = psi4.energy('scf/6-31G*', molecule=h2o)
+print(f"Energía de SCF (HF) para H₂O: {energy:.6f} Hartree")</code></pre>
       `,
       homework: `
-        <h3>Trabajo</h3>
+        <h3>Tarea</h3>
         <ol>
-          <li>Ejecute el ejemplo anterior y anote la energía SCF y la energía tras optimización.</li>
-          <li>Comente cómo cambia la geometría tras optimizar.</li>
+          <li>Instale Psi4 en un entorno Conda siguiendo la guía.</li>
+          <li>Ejecute el ejemplo práctico y reporte la energía obtenida.</li>
         </ol>
       `
     },
 
     4: {
       theory: `
-        <h2>Módulo 4 — Métodos cuánticos computacionales</h2>
-        <p>Comparativa HF vs DFT: HF es mean-field; DFT usa funcionales de densidad (por ejemplo PBE, B3LYP).</p>
+        <h2>Módulo 4 — Teoría de Funcionales de la Densidad (DFT)</h2>
+        <p>Conceptos fundamentales sobre DFT y su ventaja para sistemas grandes.</p>
+        <p>Ejemplo básico de funcional: B3LYP.</p>
       `,
       practice: `
-        <h3>Ejemplo práctico 4 — Hartree-Fock y DFT con Psi4</h3>
+        <h3>Ejemplo práctico 4 — Cálculo DFT en agua</h3>
         <pre><button class="copy-btn">Copiar</button><code>import psi4
 
-psi4.set_memory('500 MB')
-psi4.core.set_output_file('psi4_methods.dat', False)
+# Definición molécula
+h2o = psi4.geometry("""
+O
+H 1 0.96
+H 1 0.96 2 104.5
+""")
 
-mol = psi4.geometry(\"\"\"
-H 0.0 0.0 0.0
-H 0.0 0.0 0.74
-\"\"\")
+psi4.set_options({'reference': 'rhf', 'dft_functional': 'b3lyp'})
 
-# Hartree-Fock (RHF) con STO-3G
-E_hf = psi4.energy('scf/sto-3g', molecule=mol)
-print('E(HF, STO-3G) =', E_hf)
-
-# DFT (por ejemplo B3LYP/6-31G*)
-E_dft = psi4.energy('b3lyp/6-31G*', molecule=mol)
-print('E(B3LYP, 6-31G*) =', E_dft)</code></pre>
-        <p>Compare energías y comente diferencias en precisión y coste.</p>
+energy = psi4.energy('b3lyp/6-31G*', molecule=h2o)
+print(f"Energía DFT B3LYP para H₂O: {energy:.6f} Hartree")</code></pre>
       `,
       homework: `
-        <h3>Trabajo</h3>
-        <ul>
-          <li>Ejecute ambos métodos para H₂ con distintas bases.</li>
-          <li>Resumen: cómo varía la energía y por qué.</li>
-        </ul>
+        <h3>Tarea</h3>
+        <ol>
+          <li>Compare el resultado DFT con HF del módulo 3.</li>
+          <li>Investigue otros funcionales y pruebe uno diferente.</li>
+        </ol>
       `
     },
 
     5: {
       theory: `
-        <h2>Módulo 5 — Aplicaciones prácticas: perfiles de energía</h2>
-        <p>Ejemplo práctico relevante: curva de disociación (energía vs distancia interatómica).</p>
+        <h2>Módulo 5 — Teoría de Perturbaciones y Post-Hartree-Fock</h2>
+        <p>Introducción a MP2 como mejora de HF para incluir correlación electrónica.</p>
       `,
       practice: `
-        <h3>Ejemplo práctico 5 — Curva de disociación H₂ con Psi4</h3>
+        <h3>Ejemplo práctico 5 — Cálculo MP2 para agua</h3>
         <pre><button class="copy-btn">Copiar</button><code>import psi4
-import numpy as np
 
-psi4.set_memory('500 MB')
-psi4.core.set_output_file('dissociation.dat', False)
+h2o = psi4.geometry("""
+O
+H 1 0.96
+H 1 0.96 2 104.5
+""")
 
-distances = np.linspace(0.4, 3.0, 12)
-energies = []
+psi4.set_options({'reference': 'rhf'})
 
-for d in distances:
-    mol = psi4.geometry(f\"\"\" H
-    H 0 0 {d}
-    \"\"\")
-    e = psi4.energy('scf/sto-3g', molecule=mol)
-    energies.append(e)
-    print(f'd={d:.2f} Å, E={e:.6f} Hartree')
-
-# (Opcional) exportar distances, energies para graficar en Python/Matplotlib</code></pre>
-        <p>Analice el mínimo y el comportamiento a grandes separaciones.</p>
+energy_mp2 = psi4.energy('mp2/6-31G*', molecule=h2o)
+print(f"Energía MP2 para H₂O: {energy_mp2:.6f} Hartree")</code></pre>
       `,
       homework: `
-        <h3>Trabajo</h3>
+        <h3>Tarea</h3>
         <ol>
-          <li>Genere la gráfica Energía vs Distancia para H₂.</li>
-          <li>Determine la distancia de enlace aproximada y compare con literatura.</li>
+          <li>Explique las diferencias principales entre HF, DFT y MP2.</li>
+          <li>Ejecute el cálculo MP2 y compare la energía con módulos anteriores.</li>
         </ol>
       `
     },
 
     6: {
       theory: `
-        <h2>Módulo 6 — Flujo completo con Psi4</h2>
-        <p>Flujo típico con Psi4: definir molécula → optimizar geometría → cálculo de energía → análisis espectral (frecuencias).</p>
+        <h2>Módulo 6 — Proyectos y Aplicaciones Avanzadas</h2>
+        <p>Planificación de proyectos de química computacional con Psi4 y Python.</p>
+        <p>Ejemplo avanzado: extracción de propiedades moleculares y análisis.</p>
       `,
       practice: `
-        <h3>Ejemplo práctico 6 — Workflow: optimización + frecuencias</h3>
+        <h3>Ejemplo práctico 6 — Obtener función de onda y analizar propiedades</h3>
         <pre><button class="copy-btn">Copiar</button><code>import psi4
 
-psi4.set_memory('1 GB')
-psi4.core.set_output_file('workflow.dat', False)
+h2o = psi4.geometry("""
+O
+H 1 0.96
+H 1 0.96 2 104.5
+""")
 
-# Definir molécula (agua)
-mol = psi4.geometry(\"\"\"
-O 0.000000 0.000000 0.000000
-H 0.000000 -0.757000 0.587000
-H 0.000000 0.757000 0.587000
-\"\"\")
+psi4.set_options({'reference': 'rhf'})
 
-# Optimización (DFT por ejemplo)
-opt_e = psi4.optimize('b3lyp/6-31G*', molecule=mol)
-print('E optimizada (B3LYP):', opt_e)
+# Cálculo con función de onda
+energy, wfn = psi4.energy('scf/6-31G*', molecule=h2o, return_wfn=True)
 
-# Cálculo de frecuencias para verificar mínimo
-freqs = psi4.frequency('b3lyp/6-31G*', molecule=mol, return_wfn=False)
-# El log contendrá las frecuencias; si todas son reales (no imaginarias) es un mínimo.</code></pre>
-        <p>Interprete las frecuencias normales: modos de estiramiento/angulación y su relación con espectros IR.</p>
+print(f"Energía SCF: {energy:.6f} Hartree")
+
+# Obtener momento dipolar
+dipole_moment = wfn.variable('SCF DIPOLE MOMENT')
+print(f"Momento dipolar (Debye): {dipole_moment}")</code></pre>
       `,
       homework: `
-        <h3>Trabajo</h3>
+        <h3>Tarea</h3>
         <ol>
-          <li>Ejecute el workflow para H₂O y entregue la geometría optimizada y las tres frecuencias principales.</li>
-          <li>Comente si la geometría es un mínimo (basado en las frecuencias).</li>
+          <li>Investigue cómo extraer otras propiedades moleculares con Psi4.</li>
+          <li>Plantee un proyecto que incluya optimización geométrica y análisis de frecuencias.</li>
         </ol>
       `
     }
   };
 
-  /* ---------------------------
-     DOM y comportamiento
-     --------------------------- */
-  let currentModule = 1;
-  let currentTab = 'theory';
+  const modules = document.querySelectorAll('.module-btn');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const content = document.getElementById('content');
+  let activeModule = 1;
+  let activeTab = 'theory';
 
-  const moduleButtons = document.querySelectorAll('.module-btn');
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const contentEl = document.getElementById('content');
+  function renderContent() {
+    content.innerHTML = courseData[activeModule][activeTab];
+    MathJax.typesetPromise();
+  }
+
+  modules.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modules.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeModule = Number(btn.dataset.module);
+      renderContent();
+    });
+  });
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeTab = tab.dataset.tab;
+      renderContent();
+    });
+  });
+
+  renderContent();
+
+  // Copy to clipboard functionality
+  document.body.addEventListener('click', (event) => {
+    if(event.target.classList.contains('copy-btn')) {
+      const codeBlock = event.target.nextElementSibling;
+      navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+        event.target.textContent = 'Copiado';
+        event.target.classList.add('copied');
+        setTimeout(() => {
+          event.target.textContent = 'Copiar';
+          event.target.classList.remove('copied');
+        }, 1800);
+      });
+    }
+  });
+
+  // Dark mode toggle
   const themeToggle = document.getElementById('theme-toggle');
-
-  function updateActiveButtons(){
-    moduleButtons.forEach(b => b.classList.toggle('active', +b.dataset.module === currentModule));
-    tabButtons.forEach(b => b.classList.toggle('active', b.dataset.tab === currentTab));
-  }
-
-  function attachCopyHandlers(){
-    const pres = contentEl.querySelectorAll('pre');
-    pres.forEach(pre => {
-      const btn = pre.querySelector('.copy-btn');
-      if(btn){
-        btn.onclick = () => copyPreToClipboard(pre, btn);
-      } else {
-        // si falta el botón, crear
-        const newBtn = document.createElement('button');
-        newBtn.className = 'copy-btn';
-        newBtn.innerText = 'Copiar';
-        newBtn.onclick = () => copyPreToClipboard(pre, newBtn);
-        pre.style.position = 'relative';
-        pre.appendChild(newBtn);
-      }
-    });
-  }
-
-  async function copyPreToClipboard(pre, btn){
-    try {
-      const codeText = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
-      await navigator.clipboard.writeText(codeText);
-      btn.classList.add('copied');
-      const original = btn.innerText;
-      btn.innerText = 'Copiado';
-      setTimeout(()=>{ btn.classList.remove('copied'); btn.innerText = original; }, 1400);
-    } catch (err){
-      console.error('No se pudo copiar:', err);
-      alert('Error al copiar. Use Ctrl+C para copiar manualmente.');
-    }
-  }
-
-  function loadContent(){
-    const html = courseData[currentModule][currentTab] || '<p>Contenido no disponible.</p>';
-    contentEl.innerHTML = html;
-    attachCopyHandlers();
-    // Forzar MathJax a recompilar
-    if(window.MathJax && window.MathJax.typesetPromise){
-      MathJax.typesetPromise().catch(e => console.warn('MathJax:', e));
-    }
-    updateActiveButtons();
-  }
-
-  // Listeners módulos
-  moduleButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const m = +btn.dataset.module;
-      if(m === currentModule) return;
-      currentModule = m;
-      currentTab = 'theory'; // reset a teoría al cambiar módulo
-      loadContent();
-    });
-  });
-
-  // Listeners pestañas
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const t = btn.dataset.tab;
-      if(t === currentTab) return;
-      currentTab = t;
-      loadContent();
-    });
-  });
-
-  // Theme toggle
   themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')){
+    if(document.body.classList.contains('dark')) {
       themeToggle.textContent = '☀️ Modo claro';
     } else {
       themeToggle.textContent = '🌙 Modo oscuro';
     }
   });
-
-  // Carga inicial
-  loadContent();
 });
 </script>
 </body>
