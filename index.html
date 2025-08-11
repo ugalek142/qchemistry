@@ -1,178 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Curso Química Cuántica en Qiskit</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Curso Completo de Química Cuántica — Ejemplos y Código</title>
 
-  <!-- Carga MathJax -->
+  <!-- MathJax (sin async para asegurar disponibilidad cuando lo invoquemos) -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    /* --- Básicos --- */
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f5f5;
-      color: #222;
-      line-height: 1.6;
-      padding: 20px;
-      transition: background-color 0.3s, color 0.3s;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:#f5f7fb; color:#1c1c1c;
+      line-height:1.5; padding:18px;
+      transition: background 0.25s, color 0.25s;
     }
-
-    h1 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 900px;
-      margin: 0 auto 20px;
+      max-width:1100px; margin:0 auto 18px; display:flex; align-items:center; justify-content:space-between;
     }
-
-    #theme-toggle {
-      background: none;
-      border: none;
-      font-size: 1.6rem;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    #theme-toggle:hover {
-      transform: rotate(20deg);
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    h1 { font-size:1.35rem; }
+    /* --- Navegación módulos / pestañas --- */
+    nav.modules { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:12px; }
     .module-btn {
-      background-color: #e0e0e0;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
+      background:#e6eefc; border:1px solid #cfe0ff; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600;
     }
-
-    .module-btn:hover,
-    .module-btn.active {
-      background-color: #4285f4;
-      color: white;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-      gap: 12px;
-    }
-
-    .tab-btn {
-      background-color: #d0d0d0;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-
-    .tab-btn:hover,
-    .tab-btn.active {
-      background-color: #0b63e5;
-      color: white;
-    }
-
+    .module-btn.active { background:#0b63e5; color:#fff; border-color:#084fb0; }
+    .tabs { display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
+    .tab-btn { background:#eef2f8; padding:7px 12px; border-radius:6px; border:1px solid #d7e6ff; cursor:pointer; font-weight:600; }
+    .tab-btn.active { background:#0b63e5; color:#fff; border-color:#084fb0; }
+    /* --- Contenido --- */
     .content {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      min-height: 400px;
-      overflow-y: auto;
-      font-size: 1rem;
+      max-width:1100px; margin:0 auto; background:#ffffff; padding:22px; border-radius:10px;
+      box-shadow:0 8px 28px rgba(18,24,40,0.06); min-height:420px; overflow:auto;
     }
+    h2 { color:#0b3a91; margin-bottom:8px; }
+    p, ul { margin-bottom:12px; }
+    ul { padding-left:20px; }
+    pre { background:#0d0d0d; color:#f8f8f2; padding:12px; border-radius:8px; overflow:auto; font-family: Consolas, monospace; font-size:0.92rem; position:relative; }
+    code { white-space: pre-wrap; }
 
-    pre {
-      background-color: #272822;
-      color: #f8f8f2;
-      padding: 12px;
-      border-radius: 6px;
-      overflow-x: auto;
-      font-size: 0.9rem;
+    /* copy button */
+    .copy-btn {
+      position:absolute; right:8px; top:8px; background:#2b6cff; color:white; border:none; padding:6px 8px; border-radius:6px; cursor:pointer; font-size:0.85rem;
     }
+    .copy-btn.copied { background:#28a745; }
 
-    p, ul, li {
-      margin-bottom: 12px;
-    }
+    /* theme toggle */
+    #theme-toggle { background:#0b63e5; color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; }
 
-    ul {
-      padding-left: 20px;
-    }
-
-    /* Tema oscuro */
-
+    /* --- Dark theme --- */
     body.dark {
-      background-color: #121212;
-      color: #e0e0e0;
+      background:#0f1720; color:#e6eef6;
     }
+    body.dark .content { background:#0b1220; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+    body.dark .module-btn { background:#263241; color:#cfe0ff; border-color:#263241; }
+    body.dark .module-btn.active { background:#1e88ff; color:#fff; }
+    body.dark .tab-btn { background:#202a36; color:#d0e7ff; border-color:#202a36; }
+    body.dark .tab-btn.active { background:#1e88ff; color:#fff; }
+    body.dark pre { background:#071018; color:#dfeffb; }
+    body.dark .copy-btn { background:#1565c0; }
 
-    body.dark nav .module-btn {
-      background-color: #333;
-      color: #ccc;
-    }
-
-    body.dark nav .module-btn.active,
-    body.dark nav .module-btn:hover {
-      background-color: #2196f3;
-      color: white;
-    }
-
-    body.dark .tabs .tab-btn {
-      background-color: #333;
-      color: #ccc;
-    }
-
-    body.dark .tabs .tab-btn.active,
-    body.dark .tabs .tab-btn:hover {
-      background-color: #1976d2;
-      color: white;
-    }
-
-    body.dark .content {
-      background-color: #1e1e1e;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    }
-
-    body.dark pre {
-      background-color: #1e1e1e;
-      color: #f8f8f2;
+    /* responsive */
+    @media (max-width:640px){
+      .module-btn, .tab-btn { padding:8px 10px; font-size:0.9rem; }
+      header { flex-direction:column; gap:12px; align-items:center; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Curso de Química Cuántica en Qiskit</h1>
-    <button id="theme-toggle" aria-label="Alternar modo oscuro">🌙</button>
+    <h1>Curso de Química Cuántica — Ejemplos y Código (Qiskit)</h1>
+    <div>
+      <button id="theme-toggle" aria-label="Alternar tema">🌙 Modo oscuro</button>
+    </div>
   </header>
 
-  <nav>
+  <nav class="modules" role="navigation" aria-label="Módulos">
     <button class="module-btn active" data-module="1">Módulo 1</button>
     <button class="module-btn" data-module="2">Módulo 2</button>
     <button class="module-btn" data-module="3">Módulo 3</button>
@@ -181,240 +86,333 @@
     <button class="module-btn" data-module="6">Módulo 6</button>
   </nav>
 
-  <section class="tabs">
-    <button class="tab-btn active" data-tab="theory">Teoría</button>
-    <button class="tab-btn" data-tab="practice">Práctica</button>
-    <button class="tab-btn" data-tab="homework">Tarea</button>
+  <section class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab-btn active" data-tab="theory" role="tab">Teoría</button>
+    <button class="tab-btn" data-tab="practice" role="tab">Práctica</button>
+    <button class="tab-btn" data-tab="homework" role="tab">Tarea</button>
   </section>
 
-  <main id="tab-content" class="content">
-    <!-- Contenido dinámico -->
+  <main id="content" class="content" role="main" aria-live="polite">
+    <!-- contenido dinámico -->
   </main>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const courseData = {
-        1: {
-          theory: `
-            <h2>Módulo 1: Introducción a la Química Cuántica</h2>
-            <p>La química cuántica estudia las propiedades y comportamiento de la materia a nivel atómico y molecular, utilizando la mecánica cuántica.</p>
-            <p>Conceptos clave:</p>
-            <ul>
-              <li>Función de onda \\( \\psi \\)</li>
-              <li>Ecuación de Schrödinger \\( \\hat{H} \\psi = E \\psi \\)</li>
-              <li>Principio de incertidumbre de Heisenberg</li>
-            </ul>
-            <p>La ecuación de Schrödinger es fundamental para determinar los estados energéticos permitidos en un sistema cuántico.</p>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Simulación sencilla de la función de onda en una caja unidimensional:</p>
-            <pre><code>import numpy as np
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ---------------------------
+     Datos y ejemplos por módulo
+     --------------------------- */
+  const courseData = {
+    1: {
+      theory: `
+        <h2>Módulo 1 — Introducción</h2>
+        <p>Conceptos clave: función de onda \\(\\psi\\), operador hamiltoniano \\(\\hat{H}\\) y la ecuación de Schrödinger</p>
+        <p>Forma compacta: \\(\\hat{H}\\,\\psi = E\\,\\psi\\)</p>
+        <p>Interpretación: \\(|\\psi|^2\\) es la densidad de probabilidad.</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 1 — Partícula en una caja (Python)</h3>
+        <p>Calcular y graficar el estado fundamental (uso local: requiere numpy y matplotlib).</p>
+        <pre><button class="copy-btn">Copiar</button><code>import numpy as np
 import matplotlib.pyplot as plt
 
-L = 1  # Longitud de la caja
+L = 1.0
 x = np.linspace(0, L, 1000)
-psi = np.sqrt(2 / L) * np.sin(np.pi * x / L)
+n = 1
+psi = np.sqrt(2.0/L) * np.sin(n * np.pi * x / L)
 
 plt.plot(x, psi)
-plt.title('Función de onda estado fundamental')
-plt.xlabel('Posición (x)')
-plt.ylabel('$\\psi(x)$')
-plt.show()
-</code></pre>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Explique el significado físico de la ecuación de Schrödinger y el principio de incertidumbre, con ejemplos.</p>
-          `
-        },
-        2: {
-          theory: `
-            <h2>Módulo 2: Mecánica Cuántica Aplicada a Átomos</h2>
-            <p>Se estudia el modelo atómico y cómo se describen los electrones con funciones de onda y números cuánticos.</p>
-            <ul>
-              <li>Números cuánticos: principal \\(n\\), azimutal \\(l\\), magnético \\(m\\), spin \\(s\\).</li>
-              <li>Orbitales atómicos y su forma matemática.</li>
-              <li>Principio de exclusión de Pauli.</li>
-            </ul>
-            <p>Ejemplo de función de onda del estado fundamental del hidrógeno:</p>
-            <p>\\[
-              \\psi_{100}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0}
-            \\]</p>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Código básico para obtener orbitales atómicos en Qiskit Nature:</p>
-            <pre><code>from qiskit_nature.drivers import PySCFDriver
+plt.title('Función de onda — n=1')
+plt.xlabel('x')
+plt.ylabel('ψ(x)')
+plt.grid(True)
+plt.show()</code></pre>
+        <p><strong>Notas:</strong> ejecutar en Jupyter o script Python.</p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <ol>
+          <li>Explique la interpretación física de \\(|\\psi|^2\\).</li>
+          <li>Implemente y compare los primeros 3 estados (n=1,2,3).</li>
+        </ol>
+      `
+    },
 
-driver = PySCFDriver(atom='H .0 .0 .0', basis='sto3g')
+    2: {
+      theory: `
+        <h2>Módulo 2 — Mecánica cuántica aplicada a átomos</h2>
+        <p>Ejemplo: función de onda 1s del átomo de hidrógeno (radial):</p>
+        <p>\\[
+          \\psi_{1s}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0}
+        \\]</p>
+        <p>donde \\(a_0\\) es el radio de Bohr.</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 2 — Plot radial 1s (Python)</h3>
+        <pre><button class="copy-btn">Copiar</button><code>import numpy as np
+import matplotlib.pyplot as plt
+
+a0 = 1.0
+r = np.linspace(0, 10, 400)
+psi_1s = (1.0/np.sqrt(np.pi*a0**3)) * np.exp(-r/a0)
+
+plt.plot(r, psi_1s)
+plt.title('Función radial 1s (H)')
+plt.xlabel('r (a.u.)')
+plt.ylabel('ψ_{1s}(r)')
+plt.grid(True)
+plt.show()</code></pre>
+        <p>Analice la normalización y el máximo de la función.</p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <ul>
+          <li>Demuestre la normalización de \\(\\psi_{1s}(r)\\).</li>
+          <li>Compare con la densidad electrónica radial \\(4\\pi r^2 |\\psi|^2\\).</li>
+        </ul>
+      `
+    },
+
+    3: {
+      theory: `
+        <h2>Módulo 3 — Estructura molecular y orbitales</h2>
+        <p>Combinación lineal de orbitales atómicos (LCAO):</p>
+        <p>\\[
+          \\psi_{mol} = c_A\\psi_A + c_B\\psi_B
+        \\]</p>
+        <p>Los coeficientes determinan enlaces constructivos/destructivos.</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 3 — Obtener energías orbitales con Qiskit Nature (Python)</h3>
+        <pre><button class="copy-btn">Copiar</button><code>from qiskit_nature.drivers import PySCFDriver
+
+driver = PySCFDriver(atom='O 0 0 0; H 0 -0.757 0.587; H 0 0.757 0.587', basis='sto3g')
 molecule = driver.run()
-print(molecule.orbital_energies)
-</code></pre>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Describa la importancia del principio de exclusión de Pauli en la estructura electrónica.</p>
-          `
-        },
-        3: {
-          theory: `
-            <h2>Módulo 3: Estructura Molecular y Enlace</h2>
-            <p>El enlace químico es explicado mediante orbitales moleculares resultantes de combinar orbitales atómicos.</p>
-            <ul>
-              <li>Orbitales atómicos: s, p, d, f.</li>
-              <li>Hibridación: sp, sp², sp³.</li>
-              <li>Combinación lineal de orbitales atómicos (LCAO).</li>
-            </ul>
-            <p>Ejemplo de orbital molecular en hidrógeno:</p>
-            <p>\\[
-              \\psi_{mol} = c_1 \\psi_{1s_A} + c_2 \\psi_{1s_B}
-            \\]</p>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Visualice orbitales con herramientas externas o con Qiskit Nature.</p>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Investigue y describa la geometría y propiedades de la hibridación sp, sp² y sp³.</p>
-          `
-        },
-        4: {
-          theory: `
-            <h2>Módulo 4: Métodos Cuánticos Computacionales</h2>
-            <p>Se emplean métodos numéricos para resolver sistemas cuánticos complejos.</p>
-            <ul>
-              <li>Métodos ab initio (Hartree-Fock, DFT).</li>
-              <li>Ventajas y limitaciones de cada método.</li>
-            </ul>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Ejecute cálculo Hartree-Fock para H₂ con Qiskit Nature:</p>
-            <pre><code>from qiskit_nature.drivers import PySCFDriver
-from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
+print('Orbital energies:', molecule.orbital_energies)
+print('Number of molecular orbitals:', molecule.num_molecular_orbitals)</code></pre>
+        <p>Requiere: <code>pip install qiskit-nature pyscf</code></p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <ol>
+          <li>Construya la LCAO para H<sub>2</sub> y grafique la combinación constructiva y destructiva.</li>
+          <li>Interprete el orden de llenado de orbitales en H<sub>2</sub>O.</li>
+        </ol>
+      `
+    },
 
-driver = PySCFDriver(atom='H .0 .0 .0; H .0 .0 0.74', basis='sto3g')
-problem = ElectronicStructureProblem(driver)
-print("Energía aproximada:", problem.second_q_ops()[0].to_matrix().diagonal().sum())
-</code></pre>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Compare brevemente los métodos Hartree-Fock y DFT en términos de precisión y costo computacional.</p>
-          `
-        },
-        5: {
-          theory: `
-            <h2>Módulo 5: Qiskit y Química Cuántica</h2>
-            <p>Introducción al uso de Qiskit para simulaciones cuánticas de química molecular.</p>
-            <ul>
-              <li>Estructura de Qiskit Nature.</li>
-              <li>Creación de moléculas y operadores.</li>
-              <li>Simulación de estados cuánticos moleculares.</li>
-            </ul>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Ejemplo básico de configuración en Qiskit:</p>
-            <pre><code>from qiskit_nature.drivers import PySCFDriver
+    4: {
+      theory: `
+        <h2>Módulo 4 — Métodos cuánticos computacionales</h2>
+        <p>Comparativa: Hartree–Fock (mean-field) vs DFT (funcional de densidad). DFT suele ser más eficiente para sistemas grandes.</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 4 — Hartree-Fock y DFT con PySCF (Python)</h3>
+        <pre><button class="copy-btn">Copiar</button><code># Requiere: pip install pyscf
+from pyscf import gto, scf, dft
 
-driver = PySCFDriver(atom='Li .0 .0 .0', basis='sto3g')
-molecule = driver.run()
-print(molecule)
-</code></pre>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Explique la función del driver PySCF en Qiskit Nature y qué tipo de cálculos permite realizar.</p>
-          `
-        },
-        6: {
-          theory: `
-            <h2>Módulo 6: Aplicaciones Avanzadas y Simulaciones</h2>
-            <p>Simulación de moléculas complejas, optimización de energía y algoritmos cuánticos aplicados.</p>
-            <ul>
-              <li>Algoritmo VQE (Variational Quantum Eigensolver).</li>
-              <li>Optimización variacional para encontrar estados de mínima energía.</li>
-            </ul>
-          `,
-          practice: `
-            <h3>Ejemplo Práctico</h3>
-            <p>Ejemplo esquemático para VQE:</p>
-            <pre><code>from qiskit.algorithms import VQE
+mol = gto.M(atom='H 0 0 0; H 0 0 0.74', basis='sto3g')
+
+# Hartree-Fock (RHF)
+mf_hf = scf.RHF(mol)
+e_hf = mf_hf.kernel()
+print('E(HF) =', e_hf)
+
+# DFT (por ejemplo PBE)
+mf_dft = dft.RKS(mol)
+mf_dft.xc = 'PBE'
+e_dft = mf_dft.kernel()
+print('E(DFT,PBE) =', e_dft)</code></pre>
+        <p>Compare energías y tiempos de cómputo para distintos basis/métodos.</p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <ul>
+          <li>Ejecute HF y DFT para H<sub>2</sub> y compare resultados.</li>
+          <li>Explique por qué pueden diferir energías predichas.</li>
+        </ul>
+      `
+    },
+
+    5: {
+      theory: `
+        <h2>Módulo 5 — Algoritmos cuánticos para química (VQE)</h2>
+        <p>VQE (Variational Quantum Eigensolver): ansatz parametrizado + optimizador clásico para minimizar energía esperada \\(\\langle H \\rangle\\).</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 5 — Esquema VQE con Qiskit (conceptual)</h3>
+        <pre><button class="copy-btn">Copiar</button><code>from qiskit import Aer
+from qiskit.utils import QuantumInstance
+from qiskit.algorithms import VQE, NumPyMinimumEigensolver
 from qiskit.circuit.library import TwoLocal
+from qiskit.algorithms.optimizers import SLSQP
 
-# Definición de circuito parametrizado (ansatz)
-ansatz = TwoLocal(rotation_blocks='ry', entanglement_blocks='cz', reps=3)
+# Ansatz parametrizado
+ansatz = TwoLocal(rotation_blocks='ry', entanglement_blocks='cz', reps=2)
 
-# Aquí se integraría el Hamiltoniano y el backend
-# Implementación simplificada y conceptual
-</code></pre>
-          `,
-          homework: `
-            <h3>Tarea</h3>
-            <p>Investigue el algoritmo VQE y resuma sus ventajas y desafíos en química cuántica.</p>
-          `
-        }
-      };
+# Quantum instance (simulador local)
+qi = QuantumInstance(Aer.get_backend('statevector_simulator'))
 
-      let currentModule = 1;
-      let currentTab = "theory";
+# VQE con optimizador clásico
+vqe = VQE(ansatz=ansatz, optimizer=SLSQP(maxiter=100), quantum_instance=qi)
 
-      const moduleButtons = document.querySelectorAll(".module-btn");
-      const tabButtons = document.querySelectorAll(".tab-btn");
-      const contentDiv = document.getElementById("tab-content");
+# (Aquí debe integrarse el Hamiltoniano mapeado desde Qiskit Nature)
+# Resultado conceptual:
+# result = vqe.compute_minimum_eigenvalue(qubit_op)
+# print('Energy (VQE):', result.eigenvalue.real)</code></pre>
+        <p>Nota: este bloque es esquemático; la integración completa requiere construir el Hamiltoniano (ver módulo 6).</p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <p>Investigue el papel del ansatz y del optimizador en VQE: ventajas y riesgos (barren plateaus, número de parámetros).</p>
+      `
+    },
 
-      function loadContent() {
-        const content = courseData[currentModule][currentTab];
-        contentDiv.innerHTML = content;
+    6: {
+      theory: `
+        <h2>Módulo 6 — Qiskit Nature: flujo completo</h2>
+        <p>Flujo típico: <em>driver</em> → <em>problem</em> → <em>second_q_ops</em> → transformar a qubits → resolver (NumPy / VQE / QPE).</p>
+      `,
+      practice: `
+        <h3>Ejemplo práctico 6 — Cálculo de H₂O con Qiskit Nature (funcional, runnable)</h3>
+        <pre><button class="copy-btn">Copiar</button><code>from qiskit_nature.drivers import PySCFDriver
+from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
+from qiskit_nature.converters.second_quantization import QubitConverter
+from qiskit_nature.mappers.second_quantization import JordanWignerMapper
+from qiskit.algorithms import NumPyMinimumEigensolver
 
-        // Recompila MathJax para renderizar fórmulas nuevas
-        if(window.MathJax){
-          MathJax.typesetPromise()
-            .catch((err) => console.error("MathJax error:", err));
-        }
+# 1) Driver -> química clásica (PySCF)
+driver = PySCFDriver(atom='O 0 0 0; H 0 -0.757 0.587; H 0 0.757 0.587', basis='sto3g')
+problem = ElectronicStructureProblem(driver)
+
+# 2) Operadores en segunda cuantización
+second_q_ops = problem.second_q_ops()
+main_op = second_q_ops[0]
+
+# 3) Mapeo a qubits (Jordan-Wigner)
+mapper = JordanWignerMapper()
+converter = QubitConverter(mapper=mapper)
+qubit_op = converter.convert(main_op)
+
+# 4) Resolver con método clásico (NumPy exacto)
+solver = NumPyMinimumEigensolver()
+result = solver.compute_minimum_eigenvalue(qubit_op)
+
+print('Energía (Hartree):', result.eigenvalue.real)</code></pre>
+        <p>Requisitos: <code>pip install qiskit-nature pyscf qiskit</code>. Ejecutar en entorno con PySCF.</p>
+      `,
+      homework: `
+        <h3>Trabajo</h3>
+        <ol>
+          <li>Ejecute el ejemplo anterior para H₂O y documente la energía obtenida.</li>
+          <li>Intente mapear con Jordan-Wigner y Bravyi-Kitaev; compare tamaños de operadores.</li>
+        </ol>
+      `
+    }
+  };
+
+  /* ---------------------------
+     Elementos DOM y comportamiento
+     --------------------------- */
+  let currentModule = 1;
+  let currentTab = 'theory';
+
+  const moduleButtons = document.querySelectorAll('.module-btn');
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const contentEl = document.getElementById('content');
+  const themeToggle = document.getElementById('theme-toggle');
+
+  function updateActiveButtons(){
+    moduleButtons.forEach(b => b.classList.toggle('active', +b.dataset.module===currentModule));
+    tabButtons.forEach(b => b.classList.toggle('active', b.dataset.tab===currentTab));
+  }
+
+  function attachCopyHandlers(){
+    // para cada pre dentro del content, aseguro botón de copiar funcional
+    const pres = contentEl.querySelectorAll('pre');
+    pres.forEach(pre => {
+      // si ya tiene botón, skip (lo dejamos)
+      if(pre.querySelector('.copy-btn')) {
+        // re-asignar handler por seguridad
+        const btn = pre.querySelector('.copy-btn');
+        btn.onclick = () => copyPreToClipboard(pre, btn);
+        return;
       }
+      const btn = pre.querySelector('.copy-btn') || pre.querySelector('button.copy-btn') || null;
+      // si no existe, crear (pero en nuestro contenido ya añadimos botón HTML)
+      if(!btn){
+        const newBtn = document.createElement('button');
+        newBtn.className = 'copy-btn';
+        newBtn.innerText = 'Copiar';
+        newBtn.onclick = () => copyPreToClipboard(pre, newBtn);
+        pre.style.position = 'relative';
+        pre.appendChild(newBtn);
+      } else {
+        btn.onclick = () => copyPreToClipboard(pre, btn);
+      }
+    });
+  }
 
-      moduleButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          if (currentModule === +btn.dataset.module) return;
+  async function copyPreToClipboard(pre, btn){
+    try {
+      const codeText = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+      await navigator.clipboard.writeText(codeText);
+      btn.classList.add('copied');
+      const original = btn.innerText;
+      btn.innerText = 'Copiado';
+      setTimeout(()=>{ btn.classList.remove('copied'); btn.innerText = original; }, 1400);
+    } catch (err){
+      console.error('No se pudo copiar:', err);
+      alert('Error al copiar. Use Ctrl+C para copiar manualmente.');
+    }
+  }
 
-          currentModule = +btn.dataset.module;
-          moduleButtons.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
+  function loadContent(){
+    const html = courseData[currentModule][currentTab] || '<p>Contenido no disponible.</p>';
+    contentEl.innerHTML = html;
+    // Añadimos copy buttons si no existen (algunos bloques tienen botón incluido en HTML)
+    attachCopyHandlers();
+    // Re-render MathJax (si está cargado)
+    if(window.MathJax && window.MathJax.typesetPromise){
+      MathJax.typesetPromise().catch(e => console.warn('MathJax:', e));
+    }
+    updateActiveButtons();
+  }
 
-          loadContent();
-        });
-      });
-
-      tabButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          if (currentTab === btn.dataset.tab) return;
-
-          currentTab = btn.dataset.tab;
-          tabButtons.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          loadContent();
-        });
-      });
-
-      // Toggle modo oscuro
-      const themeToggle = document.getElementById("theme-toggle");
-      themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark");
-        if(document.body.classList.contains("dark")){
-          themeToggle.textContent = "☀️ Light Theme";
-        } else {
-          themeToggle.textContent = "🌙 Dark Theme";
-        }
-      });
-
-      // Carga inicial
+  // listeners módulos
+  moduleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const m = +btn.dataset.module;
+      if(m === currentModule) return;
+      currentModule = m;
+      // Al cambiar módulo, volver a 'theory' por defecto
+      currentTab = 'theory';
       loadContent();
     });
-  </script>
+  });
+
+  // listeners pestañas
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.tab;
+      if(t === currentTab) return;
+      currentTab = t;
+      loadContent();
+    });
+  });
+
+  // theme toggle
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')){
+      themeToggle.textContent = '☀️ Modo claro';
+    } else {
+      themeToggle.textContent = '🌙 Modo oscuro';
+    }
+  });
+
+  // carga inicial
+  loadContent();
+});
+</script>
 </body>
 </html>
