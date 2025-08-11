@@ -42,58 +42,58 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><strong>Estados cuánticos:</strong> Superposición, colapso y entanglement.</li>
         </ul>
         <p><strong>Ejemplo matemático:</strong></p>
-        <pre><code>i \hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t) = \hat{H} \Psi(\mathbf{r}, t)</code></pre>
+        <p>$$i \\hbar \\frac{\\partial}{\\partial t} \\Psi(\\mathbf{r}, t) = \\hat{H} \\Psi(\\mathbf{r}, t)$$</p>
       `,
       practice: `
         <h3>Práctica: Solución para la partícula en una caja unidimensional</h3>
-        <p>Calcule y grafique la función de onda para el estado fundamental de una partícula confinada en un pozo de potencial infinito de longitud L.</p>
+        <p>Calcule y grafique la función de onda para el estado fundamental.</p>
         <pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
-L = 1.0  # longitud del pozo
+L = 1  # longitud de la caja
 x = np.linspace(0, L, 1000)
+psi = np.sqrt(2 / L) * np.sin(np.pi * x / L)
 
-def psi(n, x, L):
-    return np.sqrt(2 / L) * np.sin(n * np.pi * x / L)
-
-n = 1
-plt.plot(x, psi(n, x, L))
-plt.title("Función de onda para n=1")
-plt.xlabel("Posición x")
-plt.ylabel("ψ(x)")
+plt.plot(x, psi)
+plt.title('Función de onda estado fundamental')
+plt.xlabel('Posición (x)')
+plt.ylabel('$\\psi(x)$')
 plt.grid(True)
 plt.show()
 </code></pre>
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Redacte un ensayo explicando la importancia de la ecuación de Schrödinger y el principio de incertidumbre en la química moderna. Incluya ejemplos concretos de su aplicación en moléculas.</p>
+        <p>Explique en sus propias palabras el significado físico de la ecuación de Schrödinger y el principio de incertidumbre. Incluya ejemplos.</p>
       `
     },
 
     3: {
       theory: `
-        <h3>Teoría: Estructura Molecular y Enlace Químico</h3>
-        <p>Comprender la estructura molecular es fundamental para predecir reactividad y propiedades químicas.</p>
+        <h3>Teoría: Estructura Molecular y Enlace</h3>
+        <p>El enlace químico es explicado a nivel cuántico por la interacción entre orbitales atómicos, describiendo cómo los electrones se distribuyen y forman moléculas estables.</p>
         <ul>
-          <li><strong>Orbitales atómicos:</strong> S, P, D y F; formas y energías.</li>
-          <li><strong>Enlace químico:</strong> Enlace covalente, iónico y metálico desde la perspectiva cuántica.</li>
-          <li><strong>Configuración electrónica:</strong> Principio de exclusión de Pauli y reglas de llenado.</li>
-          <li><strong>Teoría de orbitales moleculares:</strong> Combinación lineal de orbitales atómicos (LCAO).</li>
+          <li><strong>Orbitales atómicos:</strong> s, p, d y f, y su forma matemática.</li>
+          <li><strong>Reglas de construcción:</strong> Principio de exclusión, Aufbau y Pauli.</li>
+          <li><strong>Teoría del enlace de valencia:</strong> Hibridación y solapamiento.</li>
+          <li><strong>Orbitales moleculares:</strong> Combinación lineal de orbitales atómicos (LCAO).</li>
         </ul>
+        <p><strong>Ejemplo:</strong> Orbital molecular de hidrógeno (H<sub>2</sub>):</p>
+        <p>$$\\psi_\\text{mol} = c_1 \\psi_{1s_A} + c_2 \\psi_{1s_B}$$</p>
       `,
       practice: `
-        <h3>Práctica: Visualización y modelado de moléculas simples</h3>
-        <p>Utilice software (como PyMOL, Avogadro o Jupyter con Qiskit Nature) para construir y visualizar moléculas básicas y sus orbitales moleculares.</p>
-        <ul>
-          <li>Molécula de hidrógeno (H2).</li>
-          <li>Molécula de agua (H2O).</li>
-          <li>Ammoníaco (NH3).</li>
-        </ul>
+        <h3>Práctica: Visualización de orbitales atómicos</h3>
+        <p>Utilice software como PyMol o VMD para visualizar orbitales s y p.</p>
+        <p>Ejemplo con Qiskit:</p>
+        <pre><code>from qiskit_nature.drivers import PySCFDriver
+driver = PySCFDriver(atom='H .0 .0 .0', basis='sto3g')
+molecule = driver.run()
+print(molecule.orbital_energies)
+</code></pre>
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Construya el modelo electrónico y geométrico de la molécula de amoníaco y explique su estructura desde el punto de vista cuántico.</p>
+        <p>Describa la hibridación sp, sp2 y sp3, sus geometrías y ejemplos de moléculas correspondientes.</p>
         <ul>
           <li>Incluya diagramas y referencias.</li>
           <li>Discuta la hibridación de orbitales.</li>
@@ -193,7 +193,7 @@ print("Energía del estado base:", result.total_energies[0])
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Configure y ejecute un cálculo similar para la molécula de agua (H2O) utilizando Qiskit Nature y documente el procedimiento y resultados obtenidos.</p>
+        <p>Configure y ejecute un cálculo similar para la molécula de agua (H₂O) utilizando Qiskit Nature y documente el procedimiento y resultados obtenidos.</p>
       `
     }
   };
@@ -201,12 +201,17 @@ print("Energía del estado base:", result.total_energies[0])
   const moduleButtons = document.querySelectorAll(".module-btn");
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabContent = document.getElementById("tab-content");
+  const themeToggle = document.getElementById("theme-toggle");
 
   let currentModule = 1;
   let currentTab = "theory";
 
   function loadContent(module, tab) {
     tabContent.innerHTML = courseData[module][tab];
+    // Re-render MathJax fórmulas
+    if (window.MathJax) {
+      MathJax.typesetPromise();
+    }
   }
 
   moduleButtons.forEach(btn => {
@@ -227,6 +232,18 @@ print("Energía del estado base:", result.total_energies[0])
       currentTab = btn.getAttribute("data-tab");
       loadContent(currentModule, currentTab);
     });
+  });
+
+  // Tema oscuro toggle
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    if(document.body.classList.contains("dark")){
+      themeToggle.textContent = "☀️";
+      themeToggle.setAttribute("aria-label", "Alternar modo claro");
+    } else {
+      themeToggle.textContent = "🌙";
+      themeToggle.setAttribute("aria-label", "Alternar modo oscuro");
+    }
   });
 
   loadContent(currentModule, currentTab);
