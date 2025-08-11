@@ -3,38 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Curso Completo de Química Cuántica</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Curso Química Cuántica en Qiskit</title>
+
   <!-- MathJax para fórmulas -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    Curso Completo de Química Cuántica
+    <h1>Curso de Química Cuántica en Qiskit</h1>
     <button id="theme-toggle" aria-label="Alternar modo oscuro">🌙</button>
   </header>
 
-  <nav id="module-nav">
-    <button class="module-btn active" data-module="1">Módulo 1: Introducción a la Química Cuántica</button>
-    <button class="module-btn" data-module="2">Módulo 2: Fundamentos de Mecánica Cuántica</button>
-    <button class="module-btn" data-module="3">Módulo 3: Estructura Molecular y Enlace</button>
-    <button class="module-btn" data-module="4">Módulo 4: Métodos Cuánticos Computacionales</button>
-    <button class="module-btn" data-module="5">Módulo 5: Aplicaciones Prácticas</button>
-    <button class="module-btn" data-module="6">Módulo 6: Uso de Qiskit Nature</button>
+  <nav>
+    <button class="module-btn active" data-module="1">Módulo 1</button>
+    <button class="module-btn" data-module="2">Módulo 2</button>
+    <button class="module-btn" data-module="3">Módulo 3</button>
+    <button class="module-btn" data-module="4">Módulo 4</button>
+    <button class="module-btn" data-module="5">Módulo 5</button>
+    <button class="module-btn" data-module="6">Módulo 6</button>
   </nav>
 
-  <main>
-    <section id="module-detail">
+  <section class="tabs">
+    <button class="tab-btn active" data-tab="theory">Teoría</button>
+    <button class="tab-btn" data-tab="practice">Práctica</button>
+    <button class="tab-btn" data-tab="homework">Tarea</button>
+  </section>
 
-      <nav id="tab-nav">
-        <button class="tab-btn active" data-tab="theory">Teoría</button>
-        <button class="tab-btn" data-tab="practice">Práctica</button>
-        <button class="tab-btn" data-tab="homework">Tareas</button>
-      </nav>
-
-      <div id="tab-content"></div>
-
-    </section>
+  <main id="tab-content" class="content">
+    <!-- Contenido dinámico aquí -->
   </main>
 
   <script src="script.js"></script>
