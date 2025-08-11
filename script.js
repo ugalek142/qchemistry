@@ -2,55 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const courseData = {
     1: {
       theory: `
-        <h3>Teoría: Introducción a la Química Cuántica</h3>
-        <p>La química cuántica es el campo que utiliza los principios de la mecánica cuántica para explicar y predecir propiedades químicas y físicas de átomos y moléculas. Es fundamental para el desarrollo de materiales, fármacos y tecnologías avanzadas.</p>
+        <h2>Módulo 1: Introducción a la Química Cuántica</h2>
+        <p>La química cuántica estudia las propiedades y comportamiento de la materia a nivel atómico y molecular, utilizando la mecánica cuántica.</p>
+        <p>Conceptos clave:</p>
         <ul>
-          <li><strong>Definición y alcance:</strong> Cómo la mecánica cuántica permite entender el comportamiento molecular.</li>
-          <li><strong>Historia:</strong> Principales hitos desde Schrödinger y Heisenberg hasta la computación cuántica.</li>
-          <li><strong>Importancia actual:</strong> Aplicaciones en química computacional, física del estado sólido y química médica.</li>
+          <li>Función de onda \( \\psi \)</li>
+          <li>Ecuación de Schrödinger \( \\hat{H} \\psi = E \\psi \)</li>
+          <li>Principio de incertidumbre de Heisenberg</li>
         </ul>
-        <p><strong>Ejemplo:</strong> Evolución del cálculo molecular desde modelos empíricos hasta métodos ab initio.</p>
+        <p>La ecuación de Schrödinger es fundamental para determinar los estados energéticos permitidos en un sistema cuántico.</p>
       `,
       practice: `
-        <h3>Práctica: Configuración del entorno de trabajo</h3>
-        <ol>
-          <li>Instalar Python 3.x y pip (gestor de paquetes).</li>
-          <li>Instalar Qiskit y Qiskit Nature para química computacional: <code>pip install qiskit qiskit-nature</code>.</li>
-          <li>Verificar la instalación ejecutando un cálculo sencillo en el intérprete Python.</li>
-        </ol>
-        <p><strong>Ejemplo de comando para instalación:</strong></p>
-        <pre><code>pip install qiskit qiskit-nature</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <p>Realice una investigación y redacte un informe breve (1-2 páginas) sobre la evolución histórica de la química cuántica, destacando tres hitos relevantes y sus impactos actuales.</p>
-        <ul>
-          <li>Incluya referencias académicas.</li>
-          <li>Mencione aplicaciones industriales.</li>
-        </ul>
-      `
-    },
-
-    2: {
-      theory: `
-        <h3>Teoría: Fundamentos de Mecánica Cuántica</h3>
-        <p>La mecánica cuántica es la base teórica para describir sistemas microscópicos, donde las leyes clásicas no aplican. Se centra en la dualidad onda-partícula y la naturaleza probabilística de las partículas.</p>
-        <ul>
-          <li><strong>Postulados:</strong> Función de onda, operadores, y valores propios.</li>
-          <li><strong>Ecuación de Schrödinger:</strong> Ecuación fundamental para sistemas cuánticos.</li>
-          <li><strong>Principio de incertidumbre:</strong> Limitaciones en la precisión de mediciones simultáneas.</li>
-          <li><strong>Estados cuánticos:</strong> Superposición, colapso y entanglement.</li>
-        </ul>
-        <p><strong>Ejemplo matemático:</strong></p>
-        <p>$$i \\hbar \\frac{\\partial}{\\partial t} \\Psi(\\mathbf{r}, t) = \\hat{H} \\Psi(\\mathbf{r}, t)$$</p>
-      `,
-      practice: `
-        <h3>Práctica: Solución para la partícula en una caja unidimensional</h3>
-        <p>Calcule y grafique la función de onda para el estado fundamental.</p>
+        <h3>Ejemplo Práctico</h3>
+        <p>Simulación sencilla de la función de onda en una caja unidimensional:</p>
         <pre><code>import numpy as np
 import matplotlib.pyplot as plt
 
-L = 1  # longitud de la caja
+L = 1  # Longitud de la caja
 x = np.linspace(0, L, 1000)
 psi = np.sqrt(2 / L) * np.sin(np.pi * x / L)
 
@@ -58,34 +26,34 @@ plt.plot(x, psi)
 plt.title('Función de onda estado fundamental')
 plt.xlabel('Posición (x)')
 plt.ylabel('$\\psi(x)$')
-plt.grid(True)
 plt.show()
 </code></pre>
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Explique en sus propias palabras el significado físico de la ecuación de Schrödinger y el principio de incertidumbre. Incluya ejemplos.</p>
+        <p>Explique el significado físico de la ecuación de Schrödinger y el principio de incertidumbre, con ejemplos.</p>
       `
     },
 
-    3: {
+    2: {
       theory: `
-        <h3>Teoría: Estructura Molecular y Enlace</h3>
-        <p>El enlace químico es explicado a nivel cuántico por la interacción entre orbitales atómicos, describiendo cómo los electrones se distribuyen y forman moléculas estables.</p>
+        <h2>Módulo 2: Mecánica Cuántica Aplicada a Átomos</h2>
+        <p>Se estudia el modelo atómico y cómo se describen los electrones con funciones de onda y números cuánticos.</p>
         <ul>
-          <li><strong>Orbitales atómicos:</strong> s, p, d y f, y su forma matemática.</li>
-          <li><strong>Reglas de construcción:</strong> Principio de exclusión, Aufbau y Pauli.</li>
-          <li><strong>Teoría del enlace de valencia:</strong> Hibridación y solapamiento.</li>
-          <li><strong>Orbitales moleculares:</strong> Combinación lineal de orbitales atómicos (LCAO).</li>
+          <li>Números cuánticos: principal \(n\), azimutal \(l\), magnético \(m\), spin \(s\).</li>
+          <li>Orbitales atómicos y su forma matemática.</li>
+          <li>Principio de exclusión de Pauli.</li>
         </ul>
-        <p><strong>Ejemplo:</strong> Orbital molecular de hidrógeno (H<sub>2</sub>):</p>
-        <p>$$\\psi_\\text{mol} = c_1 \\psi_{1s_A} + c_2 \\psi_{1s_B}$$</p>
+        <p>Ejemplo de función de onda del estado fundamental del hidrógeno:</p>
+        <p>\[
+          \\psi_{100}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0}
+        \]</p>
       `,
       practice: `
-        <h3>Práctica: Visualización de orbitales atómicos</h3>
-        <p>Utilice software como PyMol o VMD para visualizar orbitales s y p.</p>
-        <p>Ejemplo con Qiskit:</p>
+        <h3>Ejemplo Práctico</h3>
+        <p>Código básico para obtener orbitales atómicos en Qiskit Nature:</p>
         <pre><code>from qiskit_nature.drivers import PySCFDriver
+
 driver = PySCFDriver(atom='H .0 .0 .0', basis='sto3g')
 molecule = driver.run()
 print(molecule.orbital_energies)
@@ -93,91 +61,91 @@ print(molecule.orbital_energies)
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Describa la hibridación sp, sp2 y sp3, sus geometrías y ejemplos de moléculas correspondientes.</p>
+        <p>Describa la importancia del principio de exclusión de Pauli en la estructura electrónica.</p>
+      `
+    },
+
+    3: {
+      theory: `
+        <h2>Módulo 3: Estructura Molecular y Enlace</h2>
+        <p>El enlace químico es explicado mediante orbitales moleculares resultantes de combinar orbitales atómicos.</p>
         <ul>
-          <li>Incluya diagramas y referencias.</li>
-          <li>Discuta la hibridación de orbitales.</li>
+          <li>Orbitales atómicos: s, p, d, f.</li>
+          <li>Hibridación: sp, sp², sp³.</li>
+          <li>Combinación lineal de orbitales atómicos (LCAO).</li>
         </ul>
+        <p>Ejemplo de orbital molecular en hidrógeno:</p>
+        <p>\[
+          \\psi_{mol} = c_1 \\psi_{1s_A} + c_2 \\psi_{1s_B}
+        \]</p>
+      `,
+      practice: `
+        <h3>Ejemplo Práctico</h3>
+        <p>Visualice orbitales con herramientas externas o con Qiskit Nature.</p>
+      `,
+      homework: `
+        <h3>Tarea</h3>
+        <p>Investigue y describa la geometría y propiedades de la hibridación sp, sp² y sp³.</p>
       `
     },
 
     4: {
       theory: `
-        <h3>Teoría: Métodos Cuánticos Computacionales</h3>
-        <p>Los métodos computacionales permiten simular sistemas moleculares complejos con precisión.</p>
+        <h2>Módulo 4: Métodos Cuánticos Computacionales</h2>
+        <p>Se emplean métodos numéricos para resolver sistemas cuánticos complejos.</p>
         <ul>
-          <li><strong>Ab initio:</strong> Métodos basados en principios fundamentales sin parámetros empíricos.</li>
-          <li><strong>Hartree-Fock:</strong> Aproximación central en química computacional.</li>
-          <li><strong>Teoría del funcional de densidad (DFT):</strong> Método eficiente para cálculos en sistemas grandes.</li>
-          <li><strong>Limitaciones y desafíos:</strong> Costo computacional y precisión.</li>
+          <li>Métodos ab initio (Hartree-Fock, DFT).</li>
+          <li>Ventajas y limitaciones de cada método.</li>
         </ul>
       `,
       practice: `
-        <h3>Práctica: Cálculo de energía molecular con Hartree-Fock</h3>
-        <p>Ejecute un cálculo Hartree-Fock básico utilizando Qiskit Nature para la molécula de hidrógeno.</p>
+        <h3>Ejemplo Práctico</h3>
+        <p>Ejecute cálculo Hartree-Fock para H₂ con Qiskit Nature:</p>
         <pre><code>from qiskit_nature.drivers import PySCFDriver
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
 
 driver = PySCFDriver(atom='H .0 .0 .0; H .0 .0 0.74', basis='sto3g')
 problem = ElectronicStructureProblem(driver)
-print("Energía del sistema:", problem.second_q_ops()[0].to_matrix().diagonal().sum())
+print("Energía aproximada:", problem.second_q_ops()[0].to_matrix().diagonal().sum())
 </code></pre>
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Realice un informe comparativo entre los métodos Hartree-Fock y DFT, mencionando ventajas, desventajas y casos de aplicación.</p>
+        <p>Compare Hartree-Fock y DFT: ventajas, desventajas y casos de uso.</p>
       `
     },
 
     5: {
       theory: `
-        <h3>Teoría: Aplicaciones Prácticas de la Química Cuántica</h3>
+        <h2>Módulo 5: Aplicaciones Prácticas</h2>
+        <p>La química cuántica permite avances en:</p>
         <ul>
-          <li><strong>Diseño de fármacos:</strong> Modelado molecular para optimización de ligandos.</li>
-          <li><strong>Materiales avanzados:</strong> Nanomateriales, superconductores y semiconductores.</li>
-          <li><strong>Simulación de reacciones químicas:</strong> Mecánica cuántica para entender mecanismos y energías de activación.</li>
+          <li>Diseño de fármacos</li>
+          <li>Materiales avanzados</li>
+          <li>Simulación de reacciones químicas</li>
         </ul>
       `,
       practice: `
-        <h3>Práctica: Simulación de una reacción química simple</h3>
-        <p>Utilice Qiskit Nature para simular la reacción de disociación del hidrógeno molecular.</p>
-        <pre><code>from qiskit_nature.drivers import PySCFDriver
-from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
-from qiskit_nature.algorithms.ground_state_solvers.minimum_eigensolver_factories import VQEUCCFactory
-from qiskit.algorithms import VQE
-from qiskit.algorithms.optimizers import SLSQP
-from qiskit.circuit.library import TwoLocal
-from qiskit.utils import QuantumInstance
-from qiskit import Aer
-
-driver = PySCFDriver(atom='H .0 .0 .0; H .0 .0 0.74', basis='sto3g')
-problem = ElectronicStructureProblem(driver)
-
-quantum_instance = QuantumInstance(Aer.get_backend('statevector_simulator'))
-vqe = VQE(ansatz=TwoLocal(rotation_blocks='ry', entanglement_blocks='cz', reps=1), optimizer=SLSQP(maxiter=100), quantum_instance=quantum_instance)
-solver_factory = VQEUCCFactory(quantum_instance)
-result = solver_factory.solve(problem)
-print("Energía estimada:", result.total_energies[0])
-</code></pre>
+        <h3>Ejemplo Práctico</h3>
+        <p>Simulación de disociación del hidrógeno con Qiskit Nature.</p>
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Investigue un caso de estudio donde la química cuántica haya sido clave en el desarrollo de un material o fármaco y prepare una presentación profesional.</p>
+        <p>Investigue un caso real donde química cuántica fue crucial y prepare un resumen.</p>
       `
     },
 
     6: {
       theory: `
-        <h3>Teoría: Uso de Qiskit Nature</h3>
-        <p>Qiskit Nature es un módulo de Qiskit diseñado para facilitar la simulación cuántica en química y materiales.</p>
+        <h2>Módulo 6: Uso de Qiskit Nature</h2>
+        <p>Qiskit Nature facilita simulaciones cuánticas en química y materiales.</p>
         <ul>
-          <li><strong>Arquitectura:</strong> Drivers, problemas, transformadores y algoritmos.</li>
-          <li><strong>Componentes clave:</strong> PySCFDriver, ElectronicStructureProblem, GroundStateSolver.</li>
-          <li><strong>Integración con backends cuánticos:</strong> Simuladores y hardware real.</li>
+          <li>Drivers, problemas y algoritmos clave.</li>
+          <li>Integración con simuladores y hardware cuántico real.</li>
         </ul>
       `,
       practice: `
-        <h3>Práctica: Desarrollo de un workflow básico con Qiskit Nature</h3>
+        <h3>Ejemplo Práctico</h3>
         <pre><code>from qiskit_nature.drivers import PySCFDriver
 from qiskit_nature.problems.second_quantization.electronic import ElectronicStructureProblem
 from qiskit_nature.algorithms import GroundStateEigensolver
@@ -193,7 +161,7 @@ print("Energía del estado base:", result.total_energies[0])
       `,
       homework: `
         <h3>Tarea</h3>
-        <p>Configure y ejecute un cálculo similar para la molécula de agua (H₂O) utilizando Qiskit Nature y documente el procedimiento y resultados obtenidos.</p>
+        <p>Realice un cálculo para la molécula de agua y documente resultados.</p>
       `
     }
   };
@@ -208,7 +176,6 @@ print("Energía del estado base:", result.total_energies[0])
 
   function loadContent(module, tab) {
     tabContent.innerHTML = courseData[module][tab];
-    // Re-render MathJax fórmulas
     if (window.MathJax && window.MathJax.typesetPromise) {
       window.MathJax.typesetPromise();
     }
@@ -234,10 +201,9 @@ print("Energía del estado base:", result.total_energies[0])
     });
   });
 
-  // Tema oscuro toggle
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark");
-    if(document.body.classList.contains("dark")){
+    if (document.body.classList.contains("dark")) {
       themeToggle.textContent = "☀️";
       themeToggle.setAttribute("aria-label", "Alternar modo claro");
     } else {
