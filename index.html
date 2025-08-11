@@ -1,367 +1,459 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Curso Completo de Química Cuántica — Psi4 Actualizado 2025</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Curso Avanzado de Química Cuántica (Psi4) — Interactivo</title>
 
-  <!-- MathJax -->
+  <!-- MathJax (sin async para disponibilidad inmediata al typeset) -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    /* --- Básicos --- */
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background:#f5f7fb; color:#1c1c1c;
-      line-height:1.5; padding:18px;
-      transition: background 0.25s, color 0.25s;
+    :root{
+      --bg:#f5f7fb; --card:#fff; --text:#0f1720; --accent:#0b63e5; --muted:#64748b;
+      --card-shadow: 0 8px 28px rgba(18,24,40,0.06);
     }
-    header {
-      max-width:1100px; margin:0 auto 18px; display:flex; align-items:center; justify-content:space-between;
-    }
-    h1 { font-size:1.35rem; }
-
-    nav.modules { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:12px; }
-    .module-btn {
-      background:#e6eefc; border:1px solid #cfe0ff; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600;
-    }
-    .module-btn.active { background:#0b63e5; color:#fff; border-color:#084fb0; }
-    .tabs { display:flex; gap:10px; justify-content:center; margin-bottom:14px; }
-    .tab-btn { background:#eef2f8; padding:7px 12px; border-radius:6px; border:1px solid #d7e6ff; cursor:pointer; font-weight:600; }
-    .tab-btn.active { background:#0b63e5; color:#fff; border-color:#084fb0; }
-
-    .content {
-      max-width:1100px; margin:0 auto; background:#ffffff; padding:22px; border-radius:10px;
-      box-shadow:0 8px 28px rgba(18,24,40,0.06); min-height:420px; overflow:auto;
-    }
-    h2 { color:#0b3a91; margin-bottom:8px; }
-    p, ul { margin-bottom:12px; }
-    ul { padding-left:20px; }
-    pre { background:#0d0d0d; color:#f8f8f2; padding:12px; border-radius:8px; overflow:auto; font-family: Consolas, monospace; font-size:0.92rem; position:relative; white-space:pre; }
-    code { white-space: pre-wrap; }
-
-    .copy-btn {
-      position:absolute; right:8px; top:8px; background:#2b6cff; color:white; border:none; padding:6px 8px; border-radius:6px; cursor:pointer; font-size:0.85rem;
-    }
-    .copy-btn.copied { background:#28a745; }
-
-    #theme-toggle { background:#0b63e5; color:#fff; border:none; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; }
-
-    body.dark {
-      background:#0f1720; color:#e6eef6;
-    }
-    body.dark .content { background:#0b1220; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
-    body.dark .module-btn { background:#263241; color:#cfe0ff; border-color:#263241; }
-    body.dark .module-btn.active { background:#1e88ff; color:#fff; }
-    body.dark .tab-btn { background:#202a36; color:#d0e7ff; border-color:#202a36; }
-    body.dark .tab-btn.active { background:#1e88ff; color:#fff; }
-    body.dark pre { background:#071018; color:#dfeffb; }
-    body.dark .copy-btn { background:#1565c0; }
-
-    @media (max-width:640px){
-      .module-btn, .tab-btn { padding:8px 10px; font-size:0.9rem; }
-      header { flex-direction:column; gap:12px; align-items:center; }
-    }
+    body{font-family:Inter, "Segoe UI", Roboto, Arial, sans-serif; margin:0; background:var(--bg); color:var(--text); transition:.25s;}
+    .app{display:grid; grid-template-columns:260px 1fr; min-height:100vh;}
+    header.app-header{grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; padding:14px 20px; background:linear-gradient(90deg,#063b8a,#0b63e5); color:#fff;}
+    header h1{font-size:1rem; margin:0;}
+    .header-controls{display:flex; gap:8px; align-items:center;}
+    button{cursor:pointer; border:0; background:transparent;}
+    .btn{background:var(--card); color:var(--text); padding:8px 10px; border-radius:8px; box-shadow:var(--card-shadow); border:1px solid rgba(0,0,0,0.04); font-weight:600;}
+    .btn.primary{background:var(--accent); color:#fff; border:none;}
+    .sidebar{padding:18px; background: #eef4ff; border-right:1px solid rgba(0,0,0,0.04);}
+    .logo{font-weight:700; color:var(--accent); margin-bottom:14px;}
+    .search{display:flex; gap:8px; margin-bottom:12px;}
+    .search input{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(11,99,229,0.12);background:white;}
+    .modules-list{display:flex; flex-direction:column; gap:8px;}
+    .module-item{padding:10px 12px; border-radius:8px; background:transparent; text-align:left; cursor:pointer; border:1px solid transparent;}
+    .module-item.active{background:var(--accent); color:#fff; font-weight:700; border-color:rgba(0,0,0,0.03);}
+    main{padding:20px;}
+    .content{max-width:1100px;margin:0 auto;background:var(--card);padding:22px;border-radius:12px;box-shadow:var(--card-shadow);}
+    .tabs{display:flex;gap:10px;margin-bottom:16px;}
+    .tab{padding:8px 12px;border-radius:8px;background:#f1f5f9;color:var(--muted);font-weight:700;cursor:pointer;}
+    .tab.active{background:var(--accent);color:#fff;}
+    h2{color:var(--accent);margin-bottom:10px;}
+    p, li{margin-bottom:10px}
+    .row{display:flex;gap:12px;align-items:flex-start}
+    .col{flex:1}
+    pre{background:#0b0b0b;color:#f8f8f2;padding:14px;border-radius:10px; overflow:auto; position:relative; font-family: "Courier New", monospace; margin-bottom:12px; white-space:pre;}
+    .code-controls{position:absolute; right:10px; top:8px; display:flex; gap:6px;}
+    .copy-btn, .download-btn{background:#0b63e5;color:#fff;border-radius:8px;padding:6px 8px;font-size:0.85rem;border:0; cursor:pointer;}
+    .exercise{border-left:4px solid #e6eefc; padding:12px; border-radius:8px; background:#fbfdff; margin-bottom:10px;}
+    .exercise h4{margin:0 0 8px 0;}
+    .solution{display:none;background:#f3f7ff;padding:12px;border-radius:8px;border:1px dashed rgba(11,99,229,0.2);margin-top:8px;}
+    .show-sol{background:transparent;color:var(--accent);font-weight:700;border:0;cursor:pointer;}
+    .progress{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .progress .chip{background:#eef4ff;padding:6px 10px;border-radius:999px;color:var(--accent);font-weight:600;border:1px solid rgba(11,99,229,0.12)}
+    .footer-actions{display:flex;gap:8px;align-items:center;margin-top:14px}
+    /* Dark theme */
+    body.dark{--bg:#071226; --card:#071229; --text:#e6eef6; --accent:#59a7ff; --muted:#9fb8da; --card-shadow: 0 10px 30px rgba(0,0,0,0.6);}
+    body.dark .sidebar{background:#071226;border-right:1px solid rgba(255,255,255,0.03);}
+    body.dark .search input{background:#081024;color:#dfefff;border:1px solid rgba(255,255,255,0.03);}
+    body.dark pre{background:#021022;color:#e6f6ff}
+    /* Responsive */
+    @media (max-width:980px){ .app{grid-template-columns:1fr; } .sidebar{order:2} header.app-header{flex-direction:column;gap:10px} }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Curso de Química Cuántica — Psi4 (Actualizado 2025)</h1>
-    <div>
-      <button id="theme-toggle" aria-label="Alternar tema">🌙 Modo oscuro</button>
-    </div>
-  </header>
+  <div class="app">
+    <header class="app-header">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div style="width:44px;height:44px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:800">QC</div>
+        <h1>Curso Avanzado — Química Cuántica (Psi4) — Corporativo</h1>
+      </div>
+      <div class="header-controls">
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="export-progress" class="btn">Exportar progreso</button>
+          <button id="reset-progress" class="btn">Reset progreso</button>
+          <button id="theme-toggle" class="btn primary">Dark</button>
+        </div>
+      </div>
+    </header>
 
-  <nav class="modules" role="navigation" aria-label="Módulos">
-    <button class="module-btn active" data-module="1">Módulo 1</button>
-    <button class="module-btn" data-module="2">Módulo 2</button>
-    <button class="module-btn" data-module="3">Módulo 3</button>
-    <button class="module-btn" data-module="4">Módulo 4</button>
-    <button class="module-btn" data-module="5">Módulo 5</button>
-    <button class="module-btn" data-module="6">Módulo 6</button>
-  </nav>
+    <aside class="sidebar" aria-label="Navegación">
+      <div class="logo">Programa — Química Cuántica</div>
 
-  <section class="tabs" role="tablist" aria-label="Secciones">
-    <button class="tab-btn active" data-tab="theory" role="tab">Teoría</button>
-    <button class="tab-btn" data-tab="practice" role="tab">Práctica</button>
-    <button class="tab-btn" data-tab="homework" role="tab">Tarea</button>
-  </section>
+      <div class="search">
+        <input id="search" placeholder="Buscar módulo, término o ejercicio..." aria-label="Buscar contenido"/>
+      </div>
 
-  <main id="content" class="content" role="main" aria-live="polite"></main>
+      <nav class="modules-list" id="modules-list" role="navigation" aria-label="Módulos"></nav>
+
+      <div style="margin-top:12px" aria-hidden>
+        <div style="font-size:0.86rem;color:var(--muted)">Progreso</div>
+        <div id="progress-summary" class="progress" aria-live="polite"></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="content" role="main">
+        <div class="tabs" role="tablist">
+          <div class="tab active" data-tab="theory">Teoría</div>
+          <div class="tab" data-tab="practice">Práctica</div>
+          <div class="tab" data-tab="exercises">Ejercicios</div>
+          <div class="tab" data-tab="quiz">Quiz</div>
+        </div>
+
+        <div id="module-container">
+          <!-- contenido dinámico -->
+        </div>
+
+        <div class="footer-actions">
+          <div id="module-meta" style="color:var(--muted);font-size:0.95rem"></div>
+        </div>
+      </div>
+    </main>
+  </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-
-  const courseData = {
-    1: {
-      theory: `
-        <h2>Módulo 1 — Introducción</h2>
-        <p>Conceptos clave: función de onda \\(\\psi\\), operador hamiltoniano \\(\\hat{H}\\) y la ecuación de Schrödinger.</p>
-        <p>Ecuación: \\(\\hat{H}\\psi = E\\psi\\), donde \\(\\psi\\) es la función de onda y \\(E\\) la energía.</p>
-        <p>Interpretación física: \\(|\\psi|^2\\) representa la densidad de probabilidad de encontrar la partícula.</p>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 1 — Partícula en una caja</h3>
-        <p>Calcular y graficar el estado fundamental usando <code>numpy</code> y <code>matplotlib</code>.</p>
-        <pre><button class="copy-btn">Copiar</button><code>import numpy as np
-import matplotlib.pyplot as plt
-
+/* ============================
+   Contenido del curso (ampliado)
+   10 módulos con teoría, práctica y ejercicios.
+   ============================ */
+const COURSE = {
+  meta: { title:'Curso Avanzado de Química Cuántica (Psi4)', recommended: { psi4: '1.9+', numpy: '>=1.24', matplotlib: '>=3.6' } },
+  modules: [
+    { id:1, title:'Fundamentos: mecánica cuántica para químicos', 
+      theory:`<h2>Módulo 1 — Fundamentos</h2>
+        <p>Postulados básicos: función de onda \\(\\psi\\), operadores, observables. Ecuación de Schrödinger independiente del tiempo: \\(\\hat H \\psi = E \\psi\\).</p>
+        <ul><li>Interpretación probabilística \\(|\\psi|^2\\).</li><li>Principio de incertidumbre de Heisenberg.</li></ul>`,
+      practice:`<h3>Práctica: partícula en caja (Python)</h3>
+        <pre><code>import numpy as np
 L = 1.0
-x = np.linspace(0, L, 1000)
-n = 1
-psi = np.sqrt(2 / L) * np.sin(n * np.pi * x / L)
-
-plt.plot(x, psi)
-plt.title('Función de onda para partícula en una caja (n=1)')
-plt.xlabel('x')
-plt.ylabel('ψ(x)')
-plt.grid(True)
-plt.show()</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Explique el significado físico de \\(|\\psi|^2\\).</li>
-          <li>Implemente los primeros tres estados (n=1,2,3) y grafique cada uno.</li>
-        </ol>
-      `
+x = np.linspace(0,L,1000)
+psi = np.sqrt(2/L)*np.sin(np.pi*x/L)
+# plot en matplotlib</code></pre>`,
+      exercises:[
+        { q:'Demostrar que las soluciones \\(\\psi_n\\) están normalizadas.', sol:'Integrar \\(\\int_0^L |\\psi_n|^2 dx =1\\), se obtiene 1 por ortonormalidad.'},
+        { q:'Graficar los primeros tres estados y comparar nodos.', sol:'n nodos: n-1'; }
+      ]
     },
 
-    2: {
-      theory: `
-        <h2>Módulo 2 — Mecánica cuántica aplicada a átomos</h2>
-        <p>Función de onda 1s del hidrógeno:</p>
-        <p>\\[ \\psi_{1s}(r) = \\frac{1}{\\sqrt{\\pi a_0^3}} e^{-r/a_0} \\]</p>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 2 — Función radial 1s</h3>
-        <pre><button class="copy-btn">Copiar</button><code>import numpy as np
+    { id:2, title:'Átomos y orbitales atómicos', 
+      theory:`<h2>Módulo 2 — Átomos y orbitales</h2>
+        <p>Orbitales atómicos: formas y números cuánticos. Función 1s del hidrógeno:</p>
+        <p>\\[\\psi_{1s}(r)=\\frac{1}{\\sqrt{\\pi a_0^3}}e^{-r/a_0}\\]</p>`,
+      practice:`<h3>Práctica: plot radial 1s</h3><pre><code>import numpy as np
 import matplotlib.pyplot as plt
-
-a0 = 1.0  # Radio de Bohr
-r = np.linspace(0, 10, 400)
-psi_1s = (1/np.sqrt(np.pi * a0**3)) * np.exp(-r/a0)
-
-plt.plot(r, psi_1s)
-plt.title('Función de onda 1s del hidrógeno')
-plt.xlabel('r (bohr)')
-plt.ylabel('ψ₁ₛ(r)')
-plt.grid(True)
-plt.show()</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Analice el comportamiento de \\(\\psi_{1s}(r)\\) cuando \\(r \\to 0\\) y cuando \\(r \\to \\infty\\).</li>
-          <li>Implemente y grafique la función 2s.</li>
-        </ol>
-      `
+a0=1.0
+r=np.linspace(0,10,400)
+psi=(1/np.sqrt(np.pi*a0**3))*np.exp(-r/a0)
+plt.plot(r,psi)</code></pre>`,
+      exercises:[
+        { q:'Calcular y graficar densidad radial \\(4\\pi r^2|\\psi|^2\\).', sol:'Usar numpy, multiplicar y plotear; máximo cerca de a0.'},
+        { q:'Explicar el significado físico del radio de Bohr.', sol:'Es la distancia más probable del electrón en el estado 1s.'}
+      ]
     },
 
-    3: {
-      theory: `
-        <h2>Módulo 3 — Instalación y configuración de Psi4</h2>
-        <p>Instalación recomendada con Conda para garantizar compatibilidad y entorno aislado:</p>
-        <pre><code>conda create -n psi4-env -c psi4 psi4=1.9 numpy matplotlib -y
-conda activate psi4-env</code></pre>
-        <p>Configuración básica dentro de un script Python:</p>
-        <pre><code>import psi4
-
-psi4.set_options({
-  'memory': '2 GB',
-  'nthreads': 4,
-  'reference': 'rhf'
-})</code></pre>
-        <p>Verifique la versión actual instalada con:</p>
-        <pre><code>import psi4
-print(psi4.__version__)</code></pre>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 3 — Cálculo simple de energía de agua (H₂O)</h3>
-        <pre><button class="copy-btn">Copiar</button><code>import psi4
-
-# Molécula de agua, geometría en angstroms
-h2o = psi4.geometry("""
-O
-H 1 0.96
-H 1 0.96 2 104.5
-""")
-
-# Configuración
-psi4.set_options({
-    'memory': '2 GB',
-    'nthreads': 4,
-    'reference': 'rhf'
-})
-
-# Cálculo de energía con método HF y base 6-31G*
-energy = psi4.energy('scf/6-31G*', molecule=h2o)
-print(f"Energía de SCF (HF) para H₂O: {energy:.6f} Hartree")</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Instale Psi4 en un entorno Conda siguiendo la guía.</li>
-          <li>Ejecute el ejemplo práctico y reporte la energía obtenida.</li>
-        </ol>
-      `
+    { id:3, title:'Estructura molecular y LCAO',
+      theory:`<h2>Módulo 3 — LCAO</h2><p>Orbitales moleculares como combinación lineal de orbitales atómicos: \\(\\psi_{mol}=\\sum c_i \\phi_i\\).</p>`,
+      practice:`<h3>Práctica: H₂ - combinación constructiva y destructiva</h3>
+        <pre><code># construir combinaciones psi_g=phi_A+phi_B, psi_u=phi_A-phi_B (conceptual)</code></pre>`,
+      exercises:[
+        { q:'Derivar energías aproximadas con Hückel simple para H₂.', sol:'Usar matriz 2x2 con integrales alfa y beta.'},
+        { q:'Identificar orbitales enlazantes y anti-enlazantes en diatómicos simples.', sol:'psi_g enlazante, psi_u anti-enlazante.'}
+      ]
     },
 
-    4: {
-      theory: `
-        <h2>Módulo 4 — Teoría de Funcionales de la Densidad (DFT)</h2>
-        <p>Conceptos fundamentales sobre DFT y su ventaja para sistemas grandes.</p>
-        <p>Ejemplo básico de funcional: B3LYP.</p>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 4 — Cálculo DFT en agua</h3>
-        <pre><button class="copy-btn">Copiar</button><code>import psi4
-
-# Definición molécula
-h2o = psi4.geometry("""
-O
-H 1 0.96
-H 1 0.96 2 104.5
-""")
-
-psi4.set_options({'reference': 'rhf', 'dft_functional': 'b3lyp'})
-
-energy = psi4.energy('b3lyp/6-31G*', molecule=h2o)
-print(f"Energía DFT B3LYP para H₂O: {energy:.6f} Hartree")</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Compare el resultado DFT con HF del módulo 3.</li>
-          <li>Investigue otros funcionales y pruebe uno diferente.</li>
-        </ol>
-      `
+    { id:4, title:'Métodos ab initio: Hartree-Fock',
+      theory:`<h2>Módulo 4 — Hartree-Fock</h2><p>Idea: aproximación mean-field, orbitals auto-consistentes (SCF).</p>`,
+      practice:`<h3>Práctica: SCF en Psi4 (H₂)</h3>
+<pre><code>import psi4
+psi4.set_options({'reference':'rhf','memory':'1 GB','nthreads':4})
+mol=psi4.geometry('H 0 0 0; H 0 0 0.74')
+E = psi4.energy('scf/sto-3g', molecule=mol)
+print(E)</code></pre>`,
+      exercises:[
+        { q:'Ejecutar SCF con distintas bases (sto-3g, 6-31G*) y comparar E.', sol:'Las energías convergen a medida que la base mejora.'},
+        { q:'Explicar significado de convergencia SCF y thresholds.', sol:'Tolerancias de energía y densidad; impacto en coste.'}
+      ]
     },
 
-    5: {
-      theory: `
-        <h2>Módulo 5 — Teoría de Perturbaciones y Post-Hartree-Fock</h2>
-        <p>Introducción a MP2 como mejora de HF para incluir correlación electrónica.</p>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 5 — Cálculo MP2 para agua</h3>
-        <pre><button class="copy-btn">Copiar</button><code>import psi4
-
-h2o = psi4.geometry("""
-O
-H 1 0.96
-H 1 0.96 2 104.5
-""")
-
-psi4.set_options({'reference': 'rhf'})
-
-energy_mp2 = psi4.energy('mp2/6-31G*', molecule=h2o)
-print(f"Energía MP2 para H₂O: {energy_mp2:.6f} Hartree")</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Explique las diferencias principales entre HF, DFT y MP2.</li>
-          <li>Ejecute el cálculo MP2 y compare la energía con módulos anteriores.</li>
-        </ol>
-      `
+    { id:5, title:'DFT y funcionales prácticos',
+      theory:`<h2>Módulo 5 — DFT</h2><p>Teoría del funcional de la densidad; funciónals empíricos (B3LYP, PBE).</p>`,
+      practice:`<h3>Práctica: B3LYP en Psi4</h3><pre><code>psi4.set_options({'basis':'6-31G*'})
+E = psi4.energy('b3lyp/6-31G*', molecule=mol)</code></pre>`,
+      exercises:[
+        { q:'Comparar B3LYP vs HF para H₂O; discutir precisión/coste.', sol:'DFT suele dar mejores estructuras a menor coste en muchos casos.'},
+        { q:'Investigar fallo conocido de ciertos funcionales (autointeracción).', sol:'Los funcionales locales pueden subestimar barreras.'}
+      ]
     },
 
-    6: {
-      theory: `
-        <h2>Módulo 6 — Proyectos y Aplicaciones Avanzadas</h2>
-        <p>Planificación de proyectos de química computacional con Psi4 y Python.</p>
-        <p>Ejemplo avanzado: extracción de propiedades moleculares y análisis.</p>
-      `,
-      practice: `
-        <h3>Ejemplo práctico 6 — Obtener función de onda y analizar propiedades</h3>
-        <pre><button class="copy-btn">Copiar</button><code>import psi4
+    { id:6, title:'Correlación electrónica: MP2 / CCSD',
+      theory:`<h2>Módulo 6 — MP2 y CCSD</h2><p>MP2: corrección perturbativa; CCSD: acoplamiento de excitaciones (mayor precisión).</p>`,
+      practice:`<h3>Práctica: MP2 en Psi4</h3><pre><code>E_mp2 = psi4.energy('mp2/6-31G*', molecule=mol)
+print(E_mp2)</code></pre>`,
+      exercises:[
+        { q:'Ejecutar MP2 y comparar con HF/DFT.', sol:'MP2 suele bajar energía respecto HF; CCSD aún más cercano al exacto.'},
+        { q:'Discutir costo computacional (escalado) de MP2 y CCSD.', sol:'MP2 ~N^5, CCSD ~N^6-N^7; impacto en elección.'}
+      ]
+    },
 
-h2o = psi4.geometry("""
-O
-H 1 0.96
-H 1 0.96 2 104.5
-""")
+    { id:7, title:'Frecuencias vibracionales y espectros',
+      theory:`<h2>Módulo 7 — Frecuencias</h2><p>Cálculo de Hessiano, frecuencias normales, relación con espectros IR.</p>`,
+      practice:`<h3>Práctica: frecuencias en Psi4</h3><pre><code>opt_wfn = psi4.optimize('b3lyp/6-31G*', molecule=mol, return_wfn=True)
+freqs = psi4.frequency('b3lyp/6-31G*', molecule=mol)</code></pre>`,
+      exercises:[
+        { q:'Determinar si una geometría optimizada es mínimo (frecuencias reales).', sol:'Si hay frecuencias imaginarias -> punto sella.'},
+        { q:'Asignar modos de vibración para H₂O (estiramientos/angulación).', sol:'Analizar vectores normales.'}
+      ]
+    },
 
-psi4.set_options({'reference': 'rhf'})
+    { id:8, title:'PES y curvas de disociación (reacciones)',
+      theory:`<h2>Módulo 8 — Superficies de energía potencial</h2><p>Puntos críticos: minima, máximos de transición; IRC.</p>`,
+      practice:`<h3>Práctica: curva de disociación H₂</h3><pre><code>distances = np.linspace(0.4,3.0,12)
+for d in distances:
+  mol = psi4.geometry(f'H; H 0 0 {d}')
+  e = psi4.energy('scf/sto-3g', molecule=mol)
+  print(d, e)</code></pre>`,
+      exercises:[
+        { q:'Identificar minima en la curva y comparar con distancia experimental.', sol:'Localizar mínimo en la tabla de distancias y energías.'},
+        { q:'Explique concepto de energía de disociación (D0).', sol:'Diferencia entre energía mínima y línea de referencia (átomos separados).'}
+      ]
+    },
 
-# Cálculo con función de onda
-energy, wfn = psi4.energy('scf/6-31G*', molecule=h2o, return_wfn=True)
+    { id:9, title:'Excited states: TD-DFT y CAS',
+      theory:`<h2>Módulo 9 — Estados excitados</h2><p>TD-DFT para excitaciones verticales; métodos multirreferencia para sistemas con fuerte correlación.</p>`,
+      practice:`<h3>Práctica: TD-DFT (esquema conceptual)</h3><pre><code># Psi4 TD-DFT: consultar API actual; ejemplo conceptual
+# excitation_energies = psi4.prop('td-b3lyp/6-31G*', molecule=mol)</code></pre>`,
+      exercises:[
+        { q:'Comparar estados excitados verticales vs relajados.', sol:'Vertical: geometría del estado base; relajado: optimizada en estado excitado.'},
+        { q:'Explique limitaciones de TD-DFT en cargas transfer.', sol:'TD-DFT puede subestimar excitaciones de carga larga.'}
+      ]
+    },
 
-print(f"Energía SCF: {energy:.6f} Hartree")
-
-# Obtener momento dipolar
-dipole_moment = wfn.variable('SCF DIPOLE MOMENT')
-print(f"Momento dipolar (Debye): {dipole_moment}")</code></pre>
-      `,
-      homework: `
-        <h3>Tarea</h3>
-        <ol>
-          <li>Investigue cómo extraer otras propiedades moleculares con Psi4.</li>
-          <li>Plantee un proyecto que incluya optimización geométrica y análisis de frecuencias.</li>
-        </ol>
-      `
+    { id:10, title:'QM/MM y métodos multiescala',
+      theory:`<h2>Módulo 10 — QM/MM</h2><p>Hibridación de modelado cuántico y clásico para sistemas biológicos y materiales.</p>`,
+      practice:`<h3>Práctica: esquema conceptual QM/MM</h3><pre><code># Definir región QM (active), región MM (resto), usar interfase (p.e. openMM + Psi4)</code></pre>`,
+      exercises:[
+        { q:'Proponer una estrategia QM/MM para una reacción enzimática.', sol:'Definir zona reactiva QM, enlaces cortados con enlaces de enlace y capping.'},
+        { q:'Ventajas y limitaciones de QM/MM.', sol:'Balance coste/ precisión; acoplamiento de regiones.'}
+      ]
     }
-  };
+  ]
+};
 
-  const modules = document.querySelectorAll('.module-btn');
-  const tabs = document.querySelectorAll('.tab-btn');
-  const content = document.getElementById('content');
-  let activeModule = 1;
-  let activeTab = 'theory';
+/* ============================
+   Estado local, utilidades
+   ============================ */
+const LS_KEY = 'qc_course_progress_v1';
+const THEME_KEY = 'qc_course_theme_v1';
 
-  function renderContent() {
-    content.innerHTML = courseData[activeModule][activeTab];
-    MathJax.typesetPromise();
+function loadProgress(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch(e){ return {}; }
+}
+function saveProgress(p){ localStorage.setItem(LS_KEY, JSON.stringify(p)); updateProgressSummary(); }
+
+function setTheme(theme){
+  if(theme==='dark'){ document.body.classList.add('dark'); document.getElementById('theme-toggle').textContent='Light'; localStorage.setItem(THEME_KEY,'dark'); }
+  else { document.body.classList.remove('dark'); document.getElementById('theme-toggle').textContent='Dark'; localStorage.removeItem(THEME_KEY); }
+}
+
+/* ============================
+   Render UI dinámico
+   ============================ */
+const modulesListEl = document.getElementById('modules-list');
+const moduleContainer = document.getElementById('module-container');
+const progressSummaryEl = document.getElementById('progress-summary');
+
+let activeModuleId = 1;
+let activeTab = 'theory';
+
+function buildModulesList(filter=''){
+  modulesListEl.innerHTML='';
+  COURSE.modules.forEach(m=>{
+    if(filter && !(`${m.title} ${m.theory} ${m.practice}`.toLowerCase().includes(filter.toLowerCase()))) return;
+    const btn = document.createElement('button');
+    btn.className='module-item';
+    btn.textContent = `${m.id}. ${m.title}`;
+    btn.dataset.id = m.id;
+    if(m.id===activeModuleId) btn.classList.add('active');
+    btn.addEventListener('click', ()=>{ activeModuleId=m.id; activeTab='theory'; render(); });
+    modulesListEl.appendChild(btn);
+  });
+}
+
+function render(){
+  // highlight module
+  document.querySelectorAll('.module-item').forEach(el => el.classList.toggle('active', +el.dataset.id===activeModuleId));
+  // tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab===activeTab));
+  // load content
+  const mod = COURSE.modules.find(x=>x.id===activeModuleId);
+  if(!mod) { moduleContainer.innerHTML='<p>Módulo no encontrado.</p>'; return; }
+
+  let html = `<div><h2>${mod.title}</h2>`;
+  html += `<div style="color:var(--muted);margin-bottom:8px">Módulo ${mod.id} • Versión: recomendaciones Psi4 ${COURSE.meta.recommended.psi4}</div>`;
+
+  if(activeTab==='theory'){
+    html += `<section>${mod.theory}</section>`;
+  } else if(activeTab==='practice'){
+    html += `<section>${mod.practice}</section>`;
+  } else if(activeTab==='exercises'){
+    html += `<section><h3>Ejercicios</h3>`;
+    mod.exercises.forEach((ex,i)=>{
+      html += `<div class="exercise" data-ex="${i}">
+        <h4>Ejercicio ${i+1}</h4>
+        <p>${ex.q}</p>
+        <label><input type="checkbox" data-progress="${mod.id}-${i}" ${isDone(mod.id,i)?'checked':''}/> Marcar como completado</label>
+        <div><button class="show-sol">Mostrar solución</button></div>
+        <div class="solution"><pre>${ex.sol||'Solución no provista.'}</pre></div>
+      </div>`;
+    });
+    html += `</section>`;
+  } else if(activeTab==='quiz'){
+    // simple quiz generator: 2 preguntas automáticas (ejemplo)
+    html += `<section><h3>Quiz Rápido</h3>
+      <p>Responde 2 preguntas para evaluar conocimiento clave.</p>
+      <div id="quiz-area">
+        <div style="margin-bottom:12px">
+          <div><strong>1.</strong> ¿Qué representa \\(|\\psi|^2\\)?</div>
+          <label><input type="radio" name="q1" value="a"/> Energía total</label><br/>
+          <label><input type="radio" name="q1" value="b"/> Densidad de probabilidad</label><br/>
+          <label><input type="radio" name="q1" value="c"/> Momento angular</label>
+        </div>
+
+        <div style="margin-bottom:12px">
+          <div><strong>2.</strong> ¿Cuál es la ventaja típica de DFT frente a HF?</div>
+          <label><input type="radio" name="q2" value="a"/> Más costoso computacionalmente</label><br/>
+          <label><input type="radio" name="q2" value="b"/> Mejor precisión/coste en sistemas grandes</label><br/>
+          <label><input type="radio" name="q2" value="c"/> No requiere base</label>
+        </div>
+
+        <button id="submit-quiz" class="btn primary">Enviar respuestas</button>
+        <div id="quiz-result" style="margin-top:12px"></div>
+      </div>
+    </section>`;
   }
 
-  modules.forEach(btn => {
-    btn.addEventListener('click', () => {
-      modules.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeModule = Number(btn.dataset.module);
-      renderContent();
+  html += `<div class="footer-actions"><div id="module-meta">Recomendado: Psi4 ${COURSE.meta.recommended.psi4}, NumPy ${COURSE.meta.recommended.numpy}</div></div>`;
+  html += `</div>`;
+  moduleContainer.innerHTML = html;
+
+  // attach handlers: show solutions
+  moduleContainer.querySelectorAll('.show-sol').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const sol = e.target.closest('.exercise').querySelector('.solution');
+      sol.style.display = sol.style.display==='block' ? 'none' : 'block';
     });
   });
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeTab = tab.dataset.tab;
-      renderContent();
+  // attach progress checkboxes
+  moduleContainer.querySelectorAll('input[data-progress]').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const key = e.target.dataset.progress;
+      const [mid, exi] = key.split('-').map(Number);
+      const p = loadProgress();
+      p[`${mid}-${exi}`] = !!e.target.checked;
+      saveProgress(p);
     });
   });
 
-  renderContent();
+  // quiz submit
+  const quizBtn = moduleContainer.querySelector('#submit-quiz');
+  if(quizBtn){
+    quizBtn.addEventListener('click', ()=>{
+      const r = moduleContainer.querySelector('#quiz-result');
+      const a1 = moduleContainer.querySelector('input[name="q1"]:checked')?.value;
+      const a2 = moduleContainer.querySelector('input[name="q2"]:checked')?.value;
+      let score=0;
+      if(a1==='b') score++;
+      if(a2==='b') score++;
+      r.innerHTML = `<div style="font-weight:700">Puntuación: ${score}/2</div>
+        <div>${score===2? 'Excelente — dominio conceptual.': score===1? 'Bien — repasar un punto clave.' : 'Repasar teoría: revisar Módulos 1 y 5.'}</div>`;
+    });
+  }
 
-  // Copy to clipboard functionality
-  document.body.addEventListener('click', (event) => {
-    if(event.target.classList.contains('copy-btn')) {
-      const codeBlock = event.target.nextElementSibling;
-      navigator.clipboard.writeText(codeBlock.textContent).then(() => {
-        event.target.textContent = 'Copiado';
-        event.target.classList.add('copied');
-        setTimeout(() => {
-          event.target.textContent = 'Copiar';
-          event.target.classList.remove('copied');
-        }, 1800);
+  // copy & download buttons for code blocks (if present)
+  moduleContainer.querySelectorAll('pre').forEach(pre=>{
+    // if code-controls present ignore; otherwise add
+    if(!pre.querySelector('.code-controls')){
+      const cc = document.createElement('div'); cc.className='code-controls';
+      const copyBtn = document.createElement('button'); copyBtn.className='copy-btn'; copyBtn.textContent='Copiar';
+      const dlBtn = document.createElement('button'); dlBtn.className='download-btn'; dlBtn.textContent='Descargar .py';
+      cc.appendChild(copyBtn); cc.appendChild(dlBtn);
+      pre.appendChild(cc);
+
+      copyBtn.addEventListener('click', async ()=> {
+        const code = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+        try{ await navigator.clipboard.writeText(code); copyBtn.textContent='Copiado'; setTimeout(()=>copyBtn.textContent='Copiar',1200);}catch(e){alert('Copiar no disponible');}
+      });
+
+      dlBtn.addEventListener('click', ()=> {
+        const code = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+        const blob = new Blob([code], {type:'text/x-python'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = `example_module${activeModuleId}.py`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
       });
     }
   });
 
-  // Dark mode toggle
-  const themeToggle = document.getElementById('theme-toggle');
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    if(document.body.classList.contains('dark')) {
-      themeToggle.textContent = '☀️ Modo claro';
-    } else {
-      themeToggle.textContent = '🌙 Modo oscuro';
-    }
+  // MathJax re-render
+  if(window.MathJax && window.MathJax.typesetPromise) MathJax.typesetPromise().catch(e=>console.warn(e));
+  updateProgressSummary();
+}
+
+/* ============================
+   Progress summary & utils
+   ============================ */
+function isDone(mid, exi){
+  const p = loadProgress();
+  return !!p[`${mid}-${exi}`];
+}
+
+function updateProgressSummary(){
+  const p = loadProgress();
+  const done = Object.keys(p).length;
+  progressSummaryEl.innerHTML = `<div class="chip">${done} tareas completadas</div>`;
+}
+
+/* ============================
+   Init UI: build modules list, tab click handlers, search, export/reset, theme
+   ============================ */
+function initUI(){
+  // build modules list
+  buildModulesList();
+
+  // tab handlers
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      activeTab = t.dataset.tab;
+      render();
+    });
   });
-});
+
+  // search
+  document.getElementById('search').addEventListener('input', (e)=>{
+    buildModulesList(e.target.value);
+  });
+
+  // export progress
+  document.getElementById('export-progress').addEventListener('click', ()=>{
+    const p = loadProgress();
+    const blob = new Blob([JSON.stringify(p, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='progress.json'; document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  document.getElementById('reset-progress').addEventListener('click', ()=>{
+    if(confirm('¿Resetear todo el progreso?')){ localStorage.removeItem(LS_KEY); updateProgressSummary(); render(); }
+  });
+
+  // theme toggle
+  const th = localStorage.getItem(THEME_KEY);
+  if(th==='dark') setTheme('dark'); else setTheme('light');
+  document.getElementById('theme-toggle').addEventListener('click', ()=>{
+    if(document.body.classList.contains('dark')) setTheme('light'); else setTheme('dark');
+  });
+
+  // initial render
+  render();
+}
+
+initUI();
 </script>
 </body>
 </html>
